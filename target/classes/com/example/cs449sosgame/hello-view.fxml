@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="344.0" prefWidth="368.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="com.example.cs449sosgame.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <Label fx:id="welcomeText" />
+    <CheckBox alignment="BOTTOM_LEFT" onAction="#onCheckBoxClick" text="Record game" />
+    <Button onAction="#onNewGameButtonClick" text="New Game" />
+   <RadioButton mnemonicParsing="false" text="Human">
+      <toggleGroup>
+         <ToggleGroup fx:id="togglePlayer1" />
+      </toggleGroup>
+   </RadioButton>
+   <RadioButton mnemonicParsing="false" text="Computer" toggleGroup="$togglePlayer1" />
+   <Pane prefHeight="146.0" prefWidth="250.0" />
+</VBox>
