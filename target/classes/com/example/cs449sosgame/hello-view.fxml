@@ -7,21 +7,116 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="344.0" prefWidth="368.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="com.example.cs449sosgame.HelloController">
+<VBox alignment="CENTER" prefHeight="580.0" prefWidth="565.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cs449sosgame.Controller">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+   <Pane prefHeight="38.0" prefWidth="525.0">
+      <children>
+         <RadioButton layoutX="165.0" layoutY="6.0" mnemonicParsing="false" text="Simple game">
+            <toggleGroup>
+               <ToggleGroup fx:id="toggleMode" />
+            </toggleGroup>
+         </RadioButton>
+         <RadioButton layoutX="263.0" layoutY="6.0" mnemonicParsing="false" text="General game" toggleGroup="$toggleMode" />
+         <Text layoutX="115.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SOS" wrappingWidth="49.796875" />
+      </children>
+   </Pane>
+   <TilePane maxHeight="-Infinity" maxWidth="-Infinity" prefColumns="8" prefHeight="243.0" prefRows="8" prefWidth="241.0">
+      <children>
+         <Rectangle fx:id="box1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" onMouseClicked="#boxClicked_A1" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+      </children>
+      <VBox.margin>
+         <Insets left="50.0" right="50.0" top="1.0" />
+      </VBox.margin>
+   </TilePane>
 
     <Label fx:id="welcomeText" />
-    <CheckBox alignment="BOTTOM_LEFT" onAction="#onCheckBoxClick" text="Record game" />
-    <Button onAction="#onNewGameButtonClick" text="New Game" />
-   <RadioButton mnemonicParsing="false" text="Human">
-      <toggleGroup>
-         <ToggleGroup fx:id="togglePlayer1" />
-      </toggleGroup>
-   </RadioButton>
-   <RadioButton mnemonicParsing="false" text="Computer" toggleGroup="$togglePlayer1" />
-   <Pane prefHeight="146.0" prefWidth="250.0" />
+   <Pane prefHeight="146.0" prefWidth="250.0">
+      <children>
+         <Button layoutX="436.0" layoutY="112.0" onAction="#onNewGameButtonClick" text="New Game" />
+         <CheckBox alignment="BOTTOM_LEFT" layoutX="-3.0" layoutY="124.0" onAction="#onCheckBoxClick" text="Record game" />
+         <RadioButton layoutX="5.0" layoutY="23.0" mnemonicParsing="false" text="Human">
+            <toggleGroup>
+               <ToggleGroup fx:id="togglePlayer1" />
+            </toggleGroup>
+         </RadioButton>
+         <RadioButton layoutX="5.0" layoutY="43.0" mnemonicParsing="false" text="Computer" toggleGroup="$togglePlayer1" />
+         <RadioButton layoutX="443.0" layoutY="14.0" mnemonicParsing="false" text="Human">
+            <toggleGroup>
+               <ToggleGroup fx:id="togglePlayer2" />
+            </toggleGroup>
+         </RadioButton>
+         <RadioButton layoutX="443.0" layoutY="35.0" mnemonicParsing="false" text="Computer" toggleGroup="$togglePlayer2" />
+         <Text layoutX="193.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current turn" wrappingWidth="124.796875" />
+      </children>
+   </Pane>
 </VBox>
