@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="580.0" prefWidth="565.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cs449sosgame.Controller">
+<VBox alignment="CENTER" maxHeight="1000.0" maxWidth="1000.0" minHeight="580.0" minWidth="565.0" prefHeight="600.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cs449sosgame.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -30,69 +30,69 @@
    <TilePane maxHeight="-Infinity" maxWidth="-Infinity" prefColumns="8" prefHeight="243.0" prefRows="8" prefWidth="241.0">
       <children>
          <Rectangle fx:id="box1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" onMouseClicked="#boxClicked_A1" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" onMouseClicked="#boxClicked_A1" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box3" onMouseClicked="#boxClicked_A3"  arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box4" onMouseClicked="#boxClicked_A4" arcHeight="5.0"  arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box5" onMouseClicked="#boxClicked_A5" arcHeight="5.0"  arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box6" onMouseClicked="#boxClicked_A6" arcHeight="5.0"  arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box7" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box8" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box9" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box10" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box11" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box12" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box13" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box14" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box15" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box16" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box17" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box18" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box19" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box20" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box21" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box22" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box23" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box24" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box25" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box26" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box27" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box28" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box29" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box30" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box31" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box32" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box33" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box34" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box35" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box36" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box37" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box38" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box39" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box40" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box41" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box42" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box43" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box44" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box45" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box46" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box47" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box48" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box49" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box50" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box51" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box52" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box53" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box54" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box55" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box56" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box57" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box58" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box59" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box60" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box61" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box62" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box63" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+         <Rectangle fx:id="box64" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" opacity="0.55" stroke="BLACK" strokeType="INSIDE" width="30.0" />
       </children>
       <VBox.margin>
          <Insets left="50.0" right="50.0" top="1.0" />
