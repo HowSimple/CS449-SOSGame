@@ -6,6 +6,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class HelloController {
+
+
+   /*
+    @FXML
+    public void initialize() {
+        comboBox.getItems().removeAll(comboBox.getItems());
+        comboBox.getItems().addAll("Option A", "Option B", "Option C");
+        comboBox.getSelectionModel().select("Option B");
+    }
+   */
+
     @FXML Rectangle box1, box2, box3, box4, box5, box6, box7, box8, box9 ;
     @FXML Rectangle box10, box11, box12, box13, box14, box15, box16, box17, box18, box19
                    ,box20, box21, box22, box23, box24, box25, box26, box27, box28, box29
@@ -27,26 +38,6 @@ public class HelloController {
     @FXML
     protected void boxClicked_A1(){
         box1.setFill(Color.BLACK);
-    }
-    @FXML
-    protected void boxClicked_A2(){
-        box2.setFill(Color.BLACK);
-    }
-    @FXML
-    protected void boxClicked_A3(){
-        box3.setFill(Color.BLACK);
-    }
-    @FXML
-    protected void boxClicked_A4(){
-        box4.setFill(Color.BLACK);
-    }
-    @FXML
-    protected void boxClicked_A5(){
-        box5.setFill(Color.BLACK);
-    }
-    @FXML
-    protected void boxClicked_A6(){
-        box6.setFill(Color.BLACK);
     }
     @FXML
     protected void onNewGameButtonClick() {
