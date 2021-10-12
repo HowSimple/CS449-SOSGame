@@ -17,35 +17,71 @@ import java.io.IOException;
 
 public class SOSGameApplication extends Application {
     SOSGame game;
-
+    Tile[][] board;
     public Parent createBoard(int board_size) {
 
         GridPane gameBoard = new GridPane();
+        SOSGame(board_size);
         gameBoard.setPrefSize(755, 755);
-
+        board = new Tile[board_size][board_size];
         for (int i = 0; i < board_size; i++) {
             for (int j = 0; j < board_size; j++) {
+                //Tile t = new Tile()
+                board[i][j] = new Tile();
 
-                Rectangle tile = new Rectangle(50, 50);
-                tile.setFill(Color.WHITE);
-                tile.setStroke(Color.BLACK);
+                //label.addEventHandler(MouseEvent.ANY, e -> tile.fireEvent(e));
+                //label.setFont(Font.font(40));
+                //gameBoard.add(new StackPane(tile, label), j, i);
+                gameBoard.add(new Tile(), j, i);
+                //tile.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> handleClick(event));
+                //tile.setOnMouseClicked((event) -> handleClick(event));
+               // tile.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> handleClick(event));
 
-                Text label = new Text();
-                label.addEventHandler(MouseEvent.ANY, e -> tile.fireEvent(e));
-                label.setFont(Font.font(40));
-                gameBoard.add(new StackPane(tile, label), j, i);
-                tile.setOnMouseClicked((event) -> handleClick(event));
 
             }
         }
         return gameBoard;
     }
+    private class Tile extends StackPane {
+        Text label;
+        Rectangle border;
+       public  Tile()
+       {
+           super();
+
+           setOnMouseClicked((event) -> handleClick(event));
+           border = new Rectangle(50, 50);
+           //border = new Rectangle(50, 50);
+           border.setFill(Color.WHITE);
+           border.setStroke(Color.BLACK);
+           label = new Text("X");
+           label.setFont(Font.font(40));
+           label.setFill(Color.BLUE);
+           getChildren().addAll(border, label);
+           addEventFilter(MouseEvent.MOUSE_CLICKED, event -> handleClick(event));
+       }
+       public void setText(String text)
+       {
+           label.setText(text);
+       }
+       public String getText()
+       {
+           return label.getText();
+       }
+       public void setColor(Color color)
+       {
+           border.setFill(color);
+       }
+
+
+    }
     public void handleClick(MouseEvent event) {
 
-        Rectangle t = (Rectangle) event.getSource();
-        t.setFill(Color.BLACK);
 
-        game.switchActivePlayer();
+        Tile t = (Tile) event.getSource();
+        t.setColor(Color.BLACK);
+        t.setText("O");
+           // game.switchActivePlayer();
         // update backend grid
 
 
