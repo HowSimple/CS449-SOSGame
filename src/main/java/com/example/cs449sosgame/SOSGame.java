@@ -24,7 +24,9 @@ public class SOSGame {
     {
 
     }
+    public void restartGame(){
 
+    }
 
 
     // TODO:
