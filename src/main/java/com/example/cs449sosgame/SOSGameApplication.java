@@ -1,7 +1,6 @@
 package com.example.cs449sosgame;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -16,12 +15,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SOSGameApplication extends Application {
-    SOSGame game;
+    SOSBoard game;
     Tile[][] board;
     public Parent createBoard(int board_size) {
 
         GridPane gameBoard = new GridPane();
-        SOSGame(board_size);
+        //SOSGame(board_size);
         gameBoard.setPrefSize(755, 755);
         board = new Tile[board_size][board_size];
         for (int i = 0; i < board_size; i++) {
