@@ -66,12 +66,6 @@ public class SOSApplication extends Application {
 
 
 
-        //controlsPane.getChildren().add(newGame);
-        // event handlers
-
-
-
-
 
 
 
@@ -87,13 +81,7 @@ public class SOSApplication extends Application {
                 //Tile t = new Tile()
                 tiles[i][j] = new Tile();
 
-                //label.addEventHandler(MouseEvent.ANY, e -> tile.fireEvent(e));
-                //label.setFont(Font.font(40));
-                //gameBoard.add(new StackPane(tile, label), j, i);
                 boardGUI.add(tiles[i][j], j, i);
-                //tile.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> handleClick(event));
-                //tile.setOnMouseClicked((event) -> handleClick(event));
-                // tile.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> handleClick(event));
 
 
             }
@@ -115,9 +103,7 @@ public class SOSApplication extends Application {
         blueControlsPane.setAlignment(Pos.CENTER);
         redControlsPane.setAlignment(Pos.CENTER);
         gameStatusPane.setAlignment(Pos.CENTER);
-        //BorderPane.setAlignment(blueControlsPane, Pos.BASELINE_CENTER);
-        //BorderPane.setAlignment(modeControlsPane, Pos.BASELINE_CENTER);
-        //BorderPane.setAlignment(redControlsPane, Pos.BASELINE_CENTER);
+
         mainGUI.setLeft(blueControlsPane);
         mainGUI.setRight(redControlsPane);
         mainGUI.setTop(modeControlsPane);
@@ -192,16 +178,13 @@ public class SOSApplication extends Application {
 
 
         initializeGame(boardSize);
-        //FXMLLoader fxmlLoader = new FXMLLoader(SOSGameApplication.class.getResource("hello-view.fxml"));
-        //Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+
         Scene scene = new Scene(mainGUI , 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.setWidth(700);
         stage.setHeight(700);
 
-        //TilePane grid = new TilePane();
-        //grid.setPadding()
 
 
 
