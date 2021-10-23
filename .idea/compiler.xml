@@ -6,11 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="CS449-SOSGame" />
+        <module name="CS449-SOSGame3" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="CS449-SOSGame" target="16" />
-    </bytecodeTargetLevel>
   </component>
 </project>

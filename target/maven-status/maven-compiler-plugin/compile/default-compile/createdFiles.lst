@@ -1,0 +1,6 @@
+sosapp\SOSApplication.class
+sosapp\SOSBoard$Cell.class
+sosapp\SOSBoard$GameState.class
+sosapp\SOSApplication$Tile.class
+sosapp\SOSBoard.class
+sosapp\SOSApp.class
