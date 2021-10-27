@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,7 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
+import java.io.Console;
 import java.io.IOException;
 
 public class SOSApplication extends Application {
@@ -27,23 +28,47 @@ public class SOSApplication extends Application {
     RadioButton simpleGameButton, generalGameButton;
     HBox gameStatusPane;
     Text gameStatus;
+    ComboBox boardSizeSelect;
+
     private void newGameOptions()
     {
         initializeControls();
-        ComboBox<Text> boardSizeSelect;
+         boardSizeSelect = new ComboBox();
         int minimumBoardSize = 3;
         int maximumBoardSize = 20;
 
+
+        EventHandler<ActionEvent> startButtonEvent = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                //selected.setText(boardSizeSelect.getValue() + " selected");
+                int boardSize;
+                try {
+                    boardSize = Integer.parseInt((String) boardSizeSelect.getValue());
+                } catch (NumberFormatException e)
+                {
+                    boardSize = 0;
+                }
+
+                System.out.print(boardSize);
+
+            }
+        };
+        newGame.setOnAction(startButtonEvent);
         for (int i = 3; i < 20; i++)
         {
-            String label = i.toString() +"x" + i.toString();
-            Text sizeOption = new Text(label);
-            //boardSizeSelect.setOnAction(actionEvent -> );
+            String label = i +"x" + i;
+
+            boardSizeSelect.getItems().add(label);
+
+
+
+         //   boardSizeSelect.setOnAction(event);
 
         }
 
 
-        size3x3.setOnMouseClicked();
+
         boardSizeSelect.getItems().addAll();
         modeControlsPane.getChildren().addAll();
     }
@@ -81,7 +106,7 @@ public class SOSApplication extends Application {
 
         newGame = new Button("New Game");
         gameStatusPane.setSpacing(30);
-        gameStatusPane.getChildren().addAll(newGame,gameStatus);
+        gameStatusPane.getChildren().addAll(newGame, gameStatus);
 
 
 
@@ -111,7 +136,9 @@ public class SOSApplication extends Application {
     {
         game = new SOSBoard(board_size);
         initializeBoard(board_size);
+
         initializeControls();
+        newGameOptions();
 
 
         mainGUI = new BorderPane();
@@ -190,14 +217,20 @@ public class SOSApplication extends Application {
     }
 
 
+
     @Override
     public void start(Stage stage) throws IOException {
         //need to add separate screen for player to choose board size
         int boardSize = 9;
-
-
+        //newGameOptions();
         initializeGame(boardSize);
-
+        newGame.setOnAction(e -> {
+            try {
+                restart(stage);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         Scene scene = new Scene(mainGUI , 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -209,7 +242,10 @@ public class SOSApplication extends Application {
 
         stage.show();
     }
-
+    public void restart(Stage stage) throws IOException {
+        stage.close();
+        start(new Stage());
+    }
     public static void main(String[] args) {
         launch();
     }
