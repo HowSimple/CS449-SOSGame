@@ -1,9 +1,8 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -12,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class SOSApplication extends Application {
@@ -27,7 +27,26 @@ public class SOSApplication extends Application {
     RadioButton simpleGameButton, generalGameButton;
     HBox gameStatusPane;
     Text gameStatus;
+    private void newGameOptions()
+    {
+        initializeControls();
+        ComboBox<Text> boardSizeSelect;
+        int minimumBoardSize = 3;
+        int maximumBoardSize = 20;
 
+        for (int i = 3; i < 20; i++)
+        {
+            String label = i.toString() +"x" + i.toString();
+            Text sizeOption = new Text(label);
+            //boardSizeSelect.setOnAction(actionEvent -> );
+
+        }
+
+
+        size3x3.setOnMouseClicked();
+        boardSizeSelect.getItems().addAll();
+        modeControlsPane.getChildren().addAll();
+    }
     private void initializeControls()
     {
         blueControlsPane = new VBox();
