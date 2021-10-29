@@ -1,6 +1,4 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -12,11 +10,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.Console;
 import java.io.IOException;
 
-public class SOSApplication extends Application {
-    SOSBoard game;
+public class SOSGameGUI extends Application {
+    SOSBoard gameboard;
     Tile[][] tiles;
     GridPane boardGUI;
     BorderPane mainGUI;
@@ -28,18 +25,18 @@ public class SOSApplication extends Application {
     RadioButton simpleGameButton, generalGameButton;
     HBox gameStatusPane;
     Text gameStatus;
-    ComboBox boardSizeSelect;
+    ComboBox<String> boardSizeSelect;
 
     private void newGameOptions()
     {
-        initializeControls();
-         boardSizeSelect = new ComboBox();
+
+         boardSizeSelect = new ComboBox<String>();
         int minimumBoardSize = 3;
         int maximumBoardSize = 20;
 
-
+      /*
         EventHandler<ActionEvent> startButtonEvent = new EventHandler<ActionEvent>() {
-            @Override
+          @Override
             public void handle(ActionEvent actionEvent) {
                 //selected.setText(boardSizeSelect.getValue() + " selected");
                 int boardSize;
@@ -55,22 +52,18 @@ public class SOSApplication extends Application {
             }
         };
         newGame.setOnAction(startButtonEvent);
+
+        //newGame.setOnAction(startButtonEvent);
+        */
         for (int i = 3; i < 20; i++)
         {
             String label = i +"x" + i;
-
             boardSizeSelect.getItems().add(label);
-
-
-
-         //   boardSizeSelect.setOnAction(event);
-
         }
 
+        boardSizeSelect.getSelectionModel().select("9x9");
 
 
-        boardSizeSelect.getItems().addAll();
-        modeControlsPane.getChildren().addAll();
     }
     private void initializeControls()
     {
@@ -104,22 +97,43 @@ public class SOSApplication extends Application {
         gameStatusPane = new HBox();
         gameStatus = new Text("Current Turn: ");
 
-        newGame = new Button("New Game");
+
         gameStatusPane.setSpacing(30);
         gameStatusPane.getChildren().addAll(newGame, gameStatus);
+        gameStatusPane.getChildren().add(boardSizeSelect);
+        boardGUI = new GridPane();
+        boardGUI.setPrefSize(755, 755);
+        mainGUI = new BorderPane();
 
+        boardGUI.setAlignment(Pos.CENTER);
+        mainGUI.setCenter(boardGUI);
+        modeControlsPane.setAlignment(Pos.CENTER);
+        blueControlsPane.setAlignment(Pos.CENTER);
+        redControlsPane.setAlignment(Pos.CENTER);
+        gameStatusPane.setAlignment(Pos.CENTER);
 
-
+        mainGUI.setLeft(blueControlsPane);
+        mainGUI.setRight(redControlsPane);
+        mainGUI.setTop(modeControlsPane);
+        mainGUI.setBottom(gameStatusPane);
 
 
 
     }
     private void initializeBoard(int board_size)
     {
+        gameboard = new SOSBoard(board_size);
         boardGUI = new GridPane();
+       // if (boardGUI != null)
+        //    boardGUI.getChildren().clear();
+
         //SOSGame(board_size);
-        boardGUI.setPrefSize(755, 755);
+
+
         tiles = new Tile[board_size][board_size];
+
+        boardGUI.setPrefSize(755, 755);
+
         for (int i = 0; i < board_size; i++) {
             for (int j = 0; j < board_size; j++) {
                 //Tile t = new Tile()
@@ -132,13 +146,15 @@ public class SOSApplication extends Application {
         }
         updateBoard();
     }
-    private void initializeGame(int board_size)
+    private void initializeGame()
     {
-        game = new SOSBoard(board_size);
-        initializeBoard(board_size);
 
-        initializeControls();
+
+
+       //initializeBoard(board_size);
         newGameOptions();
+        initializeControls();
+
 
 
         mainGUI = new BorderPane();
@@ -197,7 +213,7 @@ public class SOSApplication extends Application {
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
-                tiles[i][j].setTile(String.valueOf(game.getCell(i,j)));
+                tiles[i][j].setTile(String.valueOf(gameboard.getCell(i,j)));
             }
 
         }
@@ -209,28 +225,49 @@ public class SOSApplication extends Application {
 
         int row = GridPane.getRowIndex(t);
         int col = GridPane.getColumnIndex(t);
-        game.makeMove(row,col );
+        gameboard.makeMove(row,col );
         t.setColor(Color.GREY);
-        t.setTile(String.valueOf(game.getCell(row, col)));
+        t.setTile(String.valueOf(gameboard.getCell(row, col)));
         updateBoard();
 
     }
 
+    public void prompt()
+    {
+
+        newGameOptions();
+        initializeControls();
+    }
+    public void startGame()
+    {
 
 
+    }
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage ) throws IOException {
         //need to add separate screen for player to choose board size
-        int boardSize = 9;
-        //newGameOptions();
-        initializeGame(boardSize);
+        newGame = new Button("New Game");
         newGame.setOnAction(e -> {
+            //String label = boardSizeSelect.getSelectionModel().getSelectedItem();
+            String sizeSelection = boardSizeSelect.getValue();
+            int boardSize= Integer.parseInt (String.valueOf(boardSizeSelect.getValue().charAt(0)));
+            //start(stage);
+
+
             try {
-                restart(stage);
+                restart(stage, boardSize);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+
+            //newGame.setDisable(true);
+
         });
+        prompt();
+        int boardSize = 9;
+
+        //initializeGame(boardSize);
+
         Scene scene = new Scene(mainGUI , 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -242,9 +279,27 @@ public class SOSApplication extends Application {
 
         stage.show();
     }
-    public void restart(Stage stage) throws IOException {
-        stage.close();
-        start(new Stage());
+    public void resetGame()
+    {
+
+
+    }
+    public void restart(Stage stage, int boardSize) throws IOException {
+       //stage.close();
+        //initializeGame(boardSize);
+        newGameOptions();
+        initializeBoard(boardSize);
+        initializeControls();
+        Scene scene = new Scene(mainGUI , 320, 240);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.setWidth(700);
+        stage.setHeight(700);
+
+
+
+
+        stage.show();
     }
     public static void main(String[] args) {
         launch();
