@@ -1,12 +1,54 @@
+class SimpleGameBoard extends SOSBoard{
+
+    SimpleGameBoard(int size)
+    {
+        super(size);
+
+    }
+    public GameState CheckWin(int x, int y)
+    {
+
+        // check column
+        for (int i = 0; i < grid.length; i++)
+        {
+            if(grid[x][i] != getActivePlayer())
+                break;
+            if(i == i-1 && i == grid.length)
+            {
+               // win
+            }
+
+        }
+        // check row
+        for (int i = 0; i < grid.length; i++)
+        {
+            if(grid[i][y] != getActivePlayer())
+                break;
+            if(i == i-1 && i == grid.length)
+            {
+                // win
+            }
+        }
+
+        // check diagonal
+
+
+        return GameState.PLAYING;
+    }
+
+}
+
+
 public class SOSBoard{
     public enum Cell {EMPTY, S, O};
     //private Cell[][] grid;
-    private char[][] grid;
+    protected char[][] grid;
     public enum GameState {PLAYING, DRAW, S_WON, O_WON};
     public GameState state;
     //public Tile[][] grid;
     private int boardSize;
     private char activePlayer;
+
 
     public SOSBoard(int size)
     {
@@ -19,14 +61,62 @@ public class SOSBoard{
                 grid[i][j] = ' ';
 
     }
+    public GameState CheckWin(int x, int y)
+    {
+
+        // check column
+        for (int i = 0; i < grid.length; i++)
+        {
+            if(grid[x][i] != getActivePlayer())
+                break;
+            if(i == i-1 && i == grid.length)
+            {
+                // win
+            }
+
+        }
+        // check row
+        for (int i = 0; i < grid.length; i++)
+        {
+            if(grid[i][y] != getActivePlayer())
+                break;
+            if(i == i-1 && i == grid.length)
+            {
+                // win
+            }
+        }
+
+        // check diagonal
+
+
+        return GameState.PLAYING;
+    }
     public void makeMove(int row, int column)
     {
         if ((row >=0 && row < boardSize && column >= 0 && column < boardSize) && grid[row][column] == ' ')
         {
             if (activePlayer == 'S')
+            {
                 grid[row][column] = 'S';
+                if (CheckWin(row, column) == GameState.S_WON)
+                {
+                    //TODO: report win
+                }
+
+            }
+
             else if (activePlayer == 'O')
+            {
                 grid[row][column] = 'O' ;
+                if (CheckWin(row, column) == GameState.O_WON)
+                {
+                    //TODO: report win
+                }
+
+            }
+
+
+
             switchActivePlayer();
         }
 
