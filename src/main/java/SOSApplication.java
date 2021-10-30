@@ -16,6 +16,8 @@ import java.io.Console;
 import java.io.IOException;
 
 public class SOSApplication extends Application {
+
+    int boardSize;
     SOSBoard game;
     Tile[][] tiles;
     GridPane boardGUI;
@@ -28,52 +30,44 @@ public class SOSApplication extends Application {
     RadioButton simpleGameButton, generalGameButton;
     HBox gameStatusPane;
     Text gameStatus;
-    ComboBox boardSizeSelect;
+    ComboBox<String> boardSizeSelect;
 
-    private void newGameOptions()
+    private void newGameOptions(Stage stage)
     {
-        initializeControls();
-         boardSizeSelect = new ComboBox();
+        //initializeControls();
+
+         boardSizeSelect = new ComboBox<String>();
         int minimumBoardSize = 3;
         int maximumBoardSize = 20;
 
+        newGame = new Button("New Game");
+        newGame.setOnAction(e -> {
 
-        EventHandler<ActionEvent> startButtonEvent = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                //selected.setText(boardSizeSelect.getValue() + " selected");
-                int boardSize;
-                try {
-                    boardSize = Integer.parseInt((String) boardSizeSelect.getValue());
-                } catch (NumberFormatException e)
-                {
-                    boardSize = 0;
-                }
+                boardSize= Integer.parseInt (String.valueOf(boardSizeSelect.getValue().charAt(0)));
+                boardSize =3;
 
-                System.out.print(boardSize);
 
-            }
-        };
-        newGame.setOnAction(startButtonEvent);
+
+            try {
+
+                startGame(stage);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }});
+
         for (int i = 3; i < 20; i++)
         {
             String label = i +"x" + i;
 
             boardSizeSelect.getItems().add(label);
-
-
-
-         //   boardSizeSelect.setOnAction(event);
-
         }
 
-
-
-        boardSizeSelect.getItems().addAll();
-        modeControlsPane.getChildren().addAll();
+        gameStatusPane.getChildren().addAll(boardSizeSelect);
     }
     private void initializeControls()
     {
+        boardGUI = new GridPane();
+        boardGUI.setPrefSize(755, 755);
         blueControlsPane = new VBox();
         bluePlayerS = new RadioButton("S");
         bluePlayerO = new RadioButton("O");
@@ -95,6 +89,7 @@ public class SOSApplication extends Application {
         modeControlsPane = new HBox();
         Text gameLabel = new Text("SOS");
         simpleGameButton = new RadioButton("Simple game");
+        simpleGameButton.setSelected(true);
         generalGameButton = new RadioButton("General game");
         ToggleGroup mode = new ToggleGroup();
         simpleGameButton.setToggleGroup(mode);
@@ -116,9 +111,18 @@ public class SOSApplication extends Application {
     }
     private void initializeBoard(int board_size)
     {
-        boardGUI = new GridPane();
-        //SOSGame(board_size);
-        boardGUI.setPrefSize(755, 755);
+
+        if (simpleGameButton.isSelected())
+        {
+           //TODO:  game = new SOSBoard(board_size);
+
+        }
+        else if (generalGameButton.isSelected())
+        {
+          //TODO:  game = new SOSBoard(board_size);
+        }
+
+
         tiles = new Tile[board_size][board_size];
         for (int i = 0; i < board_size; i++) {
             for (int j = 0; j < board_size; j++) {
@@ -135,10 +139,11 @@ public class SOSApplication extends Application {
     private void initializeGame(int board_size)
     {
         game = new SOSBoard(board_size);
+        initializeControls();
         initializeBoard(board_size);
 
-        initializeControls();
-        newGameOptions();
+
+        //newGameOptions();
 
 
         mainGUI = new BorderPane();
@@ -214,23 +219,25 @@ public class SOSApplication extends Application {
         t.setTile(String.valueOf(game.getCell(row, col)));
         updateBoard();
 
+
     }
 
-
+    public void startGame(Stage stage) throws IOException {
+        game = new SOSBoard(boardSize);
+        initializeGame(boardSize);
+        stage.close();
+        //start(new Stage());
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
         //need to add separate screen for player to choose board size
         int boardSize = 9;
-        //newGameOptions();
         initializeGame(boardSize);
-        newGame.setOnAction(e -> {
-            try {
-                restart(stage);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
+        initializeControls();
+        newGameOptions(stage);
+
+
         Scene scene = new Scene(mainGUI , 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -242,12 +249,10 @@ public class SOSApplication extends Application {
 
         stage.show();
     }
-    public void restart(Stage stage) throws IOException {
-        stage.close();
-        start(new Stage());
-    }
+
     public static void main(String[] args) {
         launch();
     }
 }
+
 
