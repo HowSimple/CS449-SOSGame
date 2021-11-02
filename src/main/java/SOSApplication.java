@@ -155,12 +155,12 @@ public class SOSApplication extends Application {
         game = new SOSBoard(board_size);
         if (simpleGameButton.isSelected())
         {
-           //TODO:  game = new SOSBoard(board_size);
+           //game = new SimpleGameBoard(board_size);
 
         }
         else if (generalGameButton.isSelected())
         {
-          //TODO:  game = new SOSBoard(board_size);
+           game = new GeneralGameBoard(board_size);
         }
 
 
