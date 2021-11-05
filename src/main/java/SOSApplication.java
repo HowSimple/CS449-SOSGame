@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import java.io.Console;
 import java.io.IOException;
 
+import static java.lang.String.valueOf;
+
 public class SOSApplication extends Application {
 
     int boardSize;
@@ -31,7 +33,7 @@ public class SOSApplication extends Application {
     RadioButton redPlayerS, redPlayerO ;
     RadioButton simpleGameButton, generalGameButton;
     HBox gameStatusPane;
-    Text gameStatus;
+    Text gameStatus, bluePoints, redPoints;
     ComboBox<String> boardSizeSelect;
 
     private void newGameOptions(Stage stage)
@@ -49,7 +51,7 @@ public class SOSApplication extends Application {
         );
         newGame.setOnAction(e -> {
 
-                boardSize= Integer.parseInt (String.valueOf(boardSizeSelect.getValue().charAt(0)));
+                boardSize= Integer.parseInt (valueOf(boardSizeSelect.getValue().charAt(0)));
                //boardSize =3;
                 initializeBoard(boardSize);
                // newGame.setDisable(true);
@@ -116,8 +118,10 @@ public class SOSApplication extends Application {
 
             boardSizeSelect.getItems().add(label);
         }
-        //boardSizeSelect.getSelectionModel().select("3x3");
-        gameStatusPane.getChildren().addAll(boardSizeSelect);
+        bluePoints = new Text();
+        redPoints = new Text();
+
+        gameStatusPane.getChildren().addAll(boardSizeSelect, new Text("Blue points: "), bluePoints,new Text("Red points: "),redPoints);
 
         mainGUI = new BorderPane();
 
@@ -132,6 +136,7 @@ public class SOSApplication extends Application {
         mainGUI.setRight(redControlsPane);
         mainGUI.setTop(modeControlsPane);
         mainGUI.setBottom(gameStatusPane);
+
 
 
     }
@@ -155,7 +160,7 @@ public class SOSApplication extends Application {
         game = new SOSBoard(board_size);
         if (simpleGameButton.isSelected())
         {
-           //game = new SimpleGameBoard(board_size);
+           game = new SimpleGameBoard(board_size);
 
         }
         else if (generalGameButton.isSelected())
@@ -199,7 +204,7 @@ public class SOSApplication extends Application {
         }
         public void setTile(String text)
         {
-            label.setText(String.valueOf(text));
+            label.setText(valueOf(text));
         }
         public String getTile()
         {
@@ -217,7 +222,7 @@ public class SOSApplication extends Application {
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
-                tiles[i][j].setTile(String.valueOf(game.getCell(i,j)));
+                tiles[i][j].setTile(valueOf(game.getCell(i,j)));
             }
 
         }
@@ -234,12 +239,21 @@ public class SOSApplication extends Application {
        // if(activePlayerColor == Color.BLUE)
        //     activePlayerColor = Color.RED;
        // else activePlayerColor = Color.BLUE;
-        t.setTile(String.valueOf(game.getCell(row, col)));
-        if (game.getCell(row,col) == 'O')
+        t.setTile(valueOf(game.getCell(row, col)));
+        if (game.getCell(row,col) == 'S')
             t.setColor(sPlayerColor);
         else if (game.getCell(row,col) == 'O')
             t.setColor(oPlayerColor);
-        updateBoard();
+        //updateBoard();
+        tiles[row][col].setTile(valueOf(game.getCell(row,col)));
+        if (oPlayerColor == Color.BLUE)
+            bluePoints.setText(valueOf(game.getOplayerPoints()));
+        else if (sPlayerColor == Color.BLUE)
+            bluePoints.setText(valueOf(game.getSplayerPoints()));
+        if (oPlayerColor == Color.RED)
+            redPoints.setText(valueOf(game.getOplayerPoints()));
+        else if (sPlayerColor == Color.RED)
+            redPoints.setText(valueOf(game.getSplayerPoints()));
 
 
     }
