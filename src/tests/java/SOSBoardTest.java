@@ -15,6 +15,7 @@ class SOSBoardTest {
 
     @BeforeEach
     void setUp() throws Exception {
+        testBoardSize = 8;
         board = new SOSBoard(testBoardSize);
     }
 
@@ -55,5 +56,163 @@ class SOSBoardTest {
         board.switchActivePlayer();
         assertEquals('O', board.getActivePlayer());
     }
+    @Test
+    void checkMoveWithNoSOS_1()
+    {
+
+        board.makeMove(2,2);
+        assertEquals(0, board.checkSOS(2, 2));
+        board.makeMove(2,3);
+        assertEquals(0, board.checkSOS(2, 3));
+        board.makeMove(3,3);
+        assertEquals(0, board.checkSOS(3, 3));
+
+
+    }
+    @Test
+    void checkHorizontalSOS_1_innerBoard()
+    {
+        board.makeMove(2,2);
+
+        board.makeMove(3,2);
+        board.makeMove(4,2);
+
+        assertEquals(1, board.checkSOS(4, 2));
+
+
+    }
+
+
+    @Test
+    void checkHorizontalSOS_2_innerBoard()
+    {
+        board.makeMove(2,2);
+        board.makeMove(3,1);
+        board.makeMove(4,2);
+        board.makeMove(3,2);
+
+
+
+        assertEquals(1, board.checkSOS(3, 2));
+
+
+    }
+
+    @Test
+    void checkHorizontalSOS_2_edgeOfBoard1()
+    {
+        board.makeMove(0,0);
+        board.makeMove(1,0);
+        board.makeMove(2,0);
+
+        assertEquals(1, board.checkSOS(2, 0));
+
+
+    }
+
+
+    @Test
+    void checkVerticalSOS_1_innerBoard()
+    {
+        board.makeMove(2,2);
+        board.makeMove(2,3);
+        board.makeMove(2,4);
+
+
+        assertEquals(1, board.checkSOS(2, 4));
+
+
+    }
+    @Test
+    void checkVerticalSOS_2_innerBoard()
+    {
+        board.makeMove(2,2);
+
+        board.makeMove(5,5);
+        board.makeMove(2,4 );
+        board.makeMove(2,3);
+
+
+
+        assertEquals(1, board.checkSOS(2, 3));
+
+
+    }
+    @Test
+    void checkVerticalSOS_2_edgeOfBoard()
+    {
+        board.makeMove(0,0);
+        board.makeMove(0,1);
+        board.makeMove(0,2);
+
+
+        assertEquals(1, board.checkSOS(0, 2));
+
+
+    }
+    @Test
+    void checkDiagonalSOS_1_edgeOfBoard()
+    {
+        board.makeMove(0,0);
+        board.makeMove(1,1);
+        board.makeMove(2,2);
+
+        assertEquals(1, board.checkSOS(2, 2));
+
+
+    }
+    @Test
+    void checkDiagonalSOS_2_edgeOfBoard()
+    {
+        board.makeMove(0,0);
+        board.makeMove(0,1);
+        board.makeMove(2,2);
+        board.makeMove(1,1);
+
+        assertEquals(1, board.checkSOS(1, 1));
+
+
+    }
+    @Test
+    void checkDiagonalSOS_2_innerBoard()
+    {
+        board.makeMove(2,2);
+        board.makeMove(3,3);
+        board.makeMove(4,4);
+
+        assertEquals(1, board.checkSOS(4, 4));
+
+
+    }
+
+    @Test
+    void GamePointsIncreaseAfterSOS_1()
+    {
+        board.makeMove(2,0);
+        board.makeMove(3,0);
+        board.makeMove(4,0);
+
+        assertEquals(1, board.checkSOS(4, 0));
+        assertEquals(1,board.getSplayerPoints() );
+        assertEquals(0, board.getOplayerPoints());
+
+
+    }
+
+    @Test
+    void GamePointsIncreaseAfterSOS_2()
+    {
+        board.makeMove(2,0);
+        board.makeMove(3,0);
+        board.makeMove(4,0);
+
+        assertEquals(1, board.checkSOS(4, 0));
+        assertEquals(1,board.getSplayerPoints() );
+        assertEquals(0, board.getOplayerPoints());
+
+
+    }
+
+
 
 }
