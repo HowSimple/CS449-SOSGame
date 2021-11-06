@@ -6,6 +6,7 @@ public class SimpleGameBoard extends SOSBoard{
     SimpleGameBoard(int size)
     {
         super(size);
+        pointsNeededToWin = 1;
 
     }
 
