@@ -36,6 +36,7 @@ public class SOSApplication extends Application {
     Text gameStatus, bluePoints, redPoints;
     ComboBox<String> boardSizeSelect;
 
+
     private void newGameOptions(Stage stage)
     {
         //initializeControls();
@@ -255,6 +256,7 @@ public class SOSApplication extends Application {
         else if (sPlayerColor == Color.RED)
             redPoints.setText(valueOf(game.getSplayerPoints()));
 
+        gameStatus.setText(game.getState());
 
     }
 
