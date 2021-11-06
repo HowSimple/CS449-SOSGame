@@ -10,12 +10,14 @@ public class SOSBoard{
     private char activePlayer;
     private int sPlayerPoints;
     private int oPlayerPoints;
-    private int pointsNeededToWin = 1;
+    protected int pointsNeededToWin = 1;
     private int totalMoves;
 
     public SOSBoard(int size)
     {
         totalMoves = 0;
+        sPlayerPoints = 0;
+        oPlayerPoints = 0;
         activePlayer = 'S';
         boardSize = size;
         state = GameState.PLAYING;
@@ -26,7 +28,19 @@ public class SOSBoard{
 
     }
 
+    public String getState()
+    {
 
+          if (state == GameState.DRAW)
+            return "DRAW";
+        else if (state == GameState.O_WON)
+            return "O_WON";
+        else if (state == GameState.S_WON)
+            return "S_WON";
+        else
+            return "Playing";
+
+    }
     public GameState updateState(){
         int maximumPossibleMoves = grid.length * grid.length;
         if (sPlayerPoints >= pointsNeededToWin)
@@ -44,17 +58,18 @@ public class SOSBoard{
     public int checkSOS(int row, int col)
     {
         char turn = getActivePlayer();
+        System.out.print(row);
 
         //char adjacentToken = (turn == 'S') ? 'O' : 'S';
         //int offset = (turn == 'O') ? '1' : '0';
-        boolean sosFound = false;
+        //boolean sosFound = false;
         int offset = 0;
         int pointsThisTurn = 0;
         if (turn == 'O' && grid[row][col] != 'O' )
-            pointsThisTurn += 0;
+           pointsThisTurn += 0;
         if (turn == 'O' && grid[row][col] == 'O' && row >0) {
             pointsThisTurn += checkSOS(row-1, col);
-            //pointsThisTurn += checkSOS(row+1, col);
+           // pointsThisTurn += checkSOS(row+1, col);
 
         }
         if (turn == 'O' && grid[row][col] == 'O' && col >0) {
@@ -66,47 +81,41 @@ public class SOSBoard{
 
         if (turn == 'O' && grid[row][col] == 'O'  && row > 0 && col > 0 )
         {
-            pointsThisTurn+= checkSOS(row+1, col+1);
+            pointsThisTurn+= checkSOS(row-1, col-1);
         }
 
 
 
-        // up bound check
+        //  bound check
 
-        if (row +2 < grid.length)
+        if (row +2 < grid.length-1  )
         {
-            if (turn == 'O')
-            {
 
-            }
             if (grid[row-offset][col] == 'S'
                     && grid[row-offset+1][col] == 'O'
                     && grid[row-offset+2][col] == 'S')
             {
-                sosFound = true;
+                //sosFound = true;
                 pointsThisTurn += 1;
             }
-
-
-
-            if (col +2 < grid.length)
+            if (col +2 < grid.length-1)
                 if (grid[row-offset][col] == 'S'
                         && grid[row-offset+1][col+1] == 'O'
                         && grid[row-offset+2][col+2] == 'S')
                 {
-                    sosFound = true;
+                    //sosFound = true;
                     pointsThisTurn += 1;
                 }
-                    sosFound = true;
+
         }
-        // down bound check
+             //  bound check
         if (row -2 >= 0 )
         {
             if (grid[row-offset][col] == 'S'
                     && grid[row-offset-1][col] == 'O'
                     && grid[row-offset-2][col] == 'S')
             {
-                sosFound = true;
+                //sosFound = true;
                 pointsThisTurn += 1;
             }
             if (col -2 >= 0)
@@ -114,39 +123,41 @@ public class SOSBoard{
                         && grid[row-offset-1][col-1] == 'O'
                         && grid[row-offset-2][col-2] == 'S')
                 {
-                    sosFound = true;
+                    //sosFound = true;
                     pointsThisTurn += 1;
                 }
 
 
         }
-        // right bound check
-         if (col + 2 < grid.length) {
+
+
+        //  bound check
+         if (col + 2 < grid.length-1) {
             if (grid[row][col-offset] == 'S'
                     && grid[row][col-offset +1] == 'O'
                     && grid[row][col-offset +2] == 'S')
             {
-                sosFound = true;
+                //sosFound = true;
                 pointsThisTurn += 1;
             }
         }
-        // left bound check
+        //  bound check
          if (col - 2 >= 0)
         {
             if (grid[row][col-offset] == 'S'
                     && grid[row][col-offset -1] == 'O'
                     && grid[row][col-offset -2] == 'S')
             {
-                sosFound = true;
+                //sosFound = true;
                 pointsThisTurn += 1;
             }
 
 
         }
 
-        if (grid[row][col] == 'S')
+        if (getActivePlayer() == 'S')
             sPlayerPoints += pointsThisTurn;
-        else if (grid[row][col] == 'O')
+        else if (getActivePlayer() == 'O')
             oPlayerPoints += pointsThisTurn;
 
         return pointsThisTurn;
@@ -154,29 +165,26 @@ public class SOSBoard{
 
     public void makeMove(int row, int column)
     {
-        if ((row >=0 && row < boardSize && column >= 0 && column < boardSize) && grid[row][column] == ' ')
+        if ((row >=0 && row < grid.length && column >= 0 && column < grid.length) && grid[row][column] == ' ')
         {
-            checkSOS(row, column);
+
 
             if (activePlayer == 'S')
             {
                 grid[row][column] = 'S';
+                sPlayerPoints+= checkSOS(row, column);
                 //checkSOS(row, column, activePlayer);
                 //if (CheckWin(row, column) == GameState.S_WON)
-                {
-                    //TODO: report win
-                }
+
 
             }
 
             else if (activePlayer == 'O')
             {
                 grid[row][column] = 'O' ;
+                oPlayerPoints+= checkSOS(row, column);
                 //checkSOS(row, column, activePlayer);
              //   if (CheckWin(row, column) == GameState.O_WON)
-                {
-                    //TODO: report win
-                }
 
             }
 
@@ -188,6 +196,7 @@ public class SOSBoard{
 
 
     }
+
     public int getBoardSize() {return boardSize;}
     public char getActivePlayer() {return activePlayer;}
     public char getCell(int row, int column)
