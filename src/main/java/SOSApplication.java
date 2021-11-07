@@ -54,7 +54,9 @@ public class SOSApplication extends Application {
 
                 boardSize= Integer.parseInt (valueOf(boardSizeSelect.getValue().charAt(0)));
                //boardSize =3;
-                initializeBoard(boardSize);
+            gameOver();
+            initializeBoard(boardSize);
+
                // newGame.setDisable(true);
 
 
@@ -143,6 +145,7 @@ public class SOSApplication extends Application {
     }
     private void initializeBoard(int board_size)
     {
+        boardGUI.getChildren().removeAll();
         //activePlayerColor = Color.BLUE;
         if (bluePlayerS.isSelected())
             sPlayerColor = Color.BLUE;
@@ -158,7 +161,7 @@ public class SOSApplication extends Application {
 
        // activePlayerColor = sPlayerColor;
 
-        game = new SOSBoard(board_size);
+
         if (simpleGameButton.isSelected())
         {
            game = new SimpleGameBoard(board_size);
@@ -228,35 +231,42 @@ public class SOSApplication extends Application {
 
         }
     }
+    public void gameOver()
+    {
+        tiles = new Tile[3][3];
+    }
     public void handleClick(MouseEvent event) {
 
 
-        Tile t = (Tile) event.getSource();
+        if (game.getState() != "O WON" && game.getState() != "S WON"&& game.getState() != "DRAW" )
+        {
+            Tile t = (Tile) event.getSource();
+            int row = GridPane.getRowIndex(t);
+            int col = GridPane.getColumnIndex(t);
+            game.makeMove(row,col );
 
-        int row = GridPane.getRowIndex(t);
-        int col = GridPane.getColumnIndex(t);
-        game.makeMove(row,col );
+            // if(activePlayerColor == Color.BLUE)
+            //     activePlayerColor = Color.RED;
+            // else activePlayerColor = Color.BLUE;
+            t.setTile(valueOf(game.getCell(row, col)));
+            if (game.getCell(row,col) == 'S')
+                t.setColor(sPlayerColor);
+            else if (game.getCell(row,col) == 'O')
+                t.setColor(oPlayerColor);
+            //updateBoard();
+            tiles[row][col].setTile(valueOf(game.getCell(row,col)));
+            if (oPlayerColor == Color.BLUE)
+                bluePoints.setText(valueOf(game.getOplayerPoints()));
+            else if (sPlayerColor == Color.BLUE)
+                bluePoints.setText(valueOf(game.getSplayerPoints()));
+            if (oPlayerColor == Color.RED)
+                redPoints.setText(valueOf(game.getOplayerPoints()));
+            else if (sPlayerColor == Color.RED)
+                redPoints.setText(valueOf(game.getSplayerPoints()));
 
-       // if(activePlayerColor == Color.BLUE)
-       //     activePlayerColor = Color.RED;
-       // else activePlayerColor = Color.BLUE;
-        t.setTile(valueOf(game.getCell(row, col)));
-        if (game.getCell(row,col) == 'S')
-            t.setColor(sPlayerColor);
-        else if (game.getCell(row,col) == 'O')
-            t.setColor(oPlayerColor);
-        //updateBoard();
-        tiles[row][col].setTile(valueOf(game.getCell(row,col)));
-        if (oPlayerColor == Color.BLUE)
-            bluePoints.setText(valueOf(game.getOplayerPoints()));
-        else if (sPlayerColor == Color.BLUE)
-            bluePoints.setText(valueOf(game.getSplayerPoints()));
-        if (oPlayerColor == Color.RED)
-            redPoints.setText(valueOf(game.getOplayerPoints()));
-        else if (sPlayerColor == Color.RED)
-            redPoints.setText(valueOf(game.getSplayerPoints()));
+            gameStatus.setText(game.getState());
+        }
 
-        gameStatus.setText(game.getState());
 
     }
 
