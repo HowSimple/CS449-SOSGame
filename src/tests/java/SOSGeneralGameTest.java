@@ -17,79 +17,16 @@ class SOSGeneralGameTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        board = new SOSBoard(testBoardSize);
+        testBoardSize = 3;
+        board = new GeneralGameBoard(testBoardSize);
     }
 
     @AfterEach
     void tearDown() throws Exception {
     }
 
-    @Test
-    void initializeBoard()
-    {
-        assertEquals(testBoardSize, board.getBoardSize());
-        assertEquals(' ' , board.getCell(0,0));
-        assertEquals(' ' , board.getCell(1,1));
-        assertEquals(' ' , board.getCell(2,2));
-    }
-    @Test
-    void getCell() {
-        assertEquals( ' ',board.getCell(3,1));
-        board.makeMove(3, 1);
-        assertEquals('S' ,board.getCell(3,1));
-    }
-    @Test
-    void makeMove()
-    {
-
-        board.makeMove(3, 1);
-        assertEquals('S' ,board.getCell(3,1));
-    }
-    @Test
-    void switchActivePlayer() {
-        assertEquals('S', board.getActivePlayer());
-        board.switchActivePlayer();
-        assertEquals('O', board.getActivePlayer());
-    }
-    @Test
-    void getActivePlayer() {
-        assertEquals('S', board.getActivePlayer());
-        board.switchActivePlayer();
-        assertEquals('O', board.getActivePlayer());
-    }
-    @Test
-    void checkHorizontalSOS()
-    {
-        board.makeMove(0,0);
-        board.makeMove(1,0);
-        board.makeMove(2,0);
-
-        assertEquals(true,board.checkSOS(2, 0));
 
 
-    }
-    @Test
-    void checkVerticalSOS()
-    {
-        board.makeMove(0,0);
-        board.makeMove(0,1);
-        board.makeMove(0,2);
-
-        assertEquals(true, board.checkSOS(0, 2));
-
-
-    }
-    @Test
-    void checkDiagonalSOS()
-    {
-        board.makeMove(0,0);
-        board.makeMove(1,1);
-        board.makeMove(2,2);
-
-        assertEquals(true, board.checkSOS(2, 2));
-
-
-    }
 
     @Test
     void GamePointsIncreaseAfterSOS()
@@ -98,13 +35,100 @@ class SOSGeneralGameTest {
         board.makeMove(1,0);
         board.makeMove(2,0);
 
-        assertEquals(true, board.checkSOS(2, 0));
+        assertEquals(1, board.checkSOS(2, 0));
         assertEquals(board.getSplayerPoints(), 1);
 
 
     }
 
+    @Test
+    void GeneralGameWinByS()
+    {
+        board.makeMove(0,0);
+        board.makeMove(0,1);
+        board.makeMove(0,2);
+
+        board.makeMove(1,0);
+        board.makeMove(1,1);
+        board.makeMove(1,2);
+
+        board.makeMove(2,0);
+        board.makeMove(2,1);
+        board.makeMove(2,2);
+        //board.updateState();
+        assertEquals(4, board.getSplayerPoints());
+        assertEquals("S WON", board.getState());
+    }
+    @Test
+    void GeneralGameWinBy0()
+    {
+        board = new GeneralGameBoard(4);
+        board.makeMove(1,0);
+        board.makeMove(0,0);
+
+        board.makeMove(2,0);
+        board.makeMove(3,0);
+        assertEquals(0, board.getSplayerPoints());
+        assertEquals(0, board.getOplayerPoints());
+        board.makeMove(1,1);
+        board.makeMove(0,1);
+
+        board.makeMove(2,1);
+        board.makeMove(3,1);
+        assertEquals(0, board.getSplayerPoints());
+        assertEquals(0, board.getOplayerPoints());
+        board.makeMove(1,2);
+        board.makeMove(0,2);
 
 
+
+        board.makeMove(2,3);
+        board.makeMove(2,2);
+        assertEquals(0, board.getSplayerPoints());
+        assertEquals(0, board.getOplayerPoints());
+        board.makeMove(0,3);
+        board.makeMove(3,3);
+        board.makeMove(1,3);
+        board.makeMove(3,2);
+
+
+
+        assertEquals(0, board.getSplayerPoints());
+        assertEquals(1, board.getOplayerPoints());
+
+        assertEquals("O WON", board.getState());
+    }
+    @Test
+    void GeneralGameDraw()
+    {
+        board = new GeneralGameBoard(4);
+        board.makeMove(1,0);
+        board.makeMove(0,0);
+
+        board.makeMove(2,0);
+        board.makeMove(3,0);
+        assertEquals(0, board.getSplayerPoints());
+        assertEquals(0, board.getOplayerPoints());
+        board.makeMove(1,1);
+        board.makeMove(0,1);
+
+        board.makeMove(2,1);
+        board.makeMove(3,1);
+        assertEquals(0, board.getSplayerPoints());
+        assertEquals(0, board.getOplayerPoints());
+        board.makeMove(1,2);
+        board.makeMove(0,2);
+
+        board.makeMove(2,2);
+        board.makeMove(3,2);
+        assertEquals(0, board.getSplayerPoints());
+        assertEquals(0, board.getOplayerPoints());
+        board.makeMove(1,3);
+        board.makeMove(0,3);
+
+        board.makeMove(2,3);
+        board.makeMove(3,3);
+        assertEquals("DRAW", board.getState());
+    }
 
 }
