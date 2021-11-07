@@ -7,15 +7,15 @@ public class SOSBoard{
     public enum GameState {PLAYING, DRAW, S_WON, O_WON};
     public GameState state;
     private int boardSize;
-    private char activePlayer;
-    private int sPlayerPoints;
-    private int oPlayerPoints;
-    protected int pointsNeededToWin = 1;
-    private int totalMoves;
+    protected char activePlayer;
+    protected int sPlayerPoints;
+    protected int oPlayerPoints;
+    //protected int pointsNeededToWin = 1;
+    protected int movesThisGame;
 
     public SOSBoard(int size)
     {
-        totalMoves = 0;
+        movesThisGame = 0;
         sPlayerPoints = 0;
         oPlayerPoints = 0;
         activePlayer = 'S';
@@ -34,23 +34,19 @@ public class SOSBoard{
           if (state == GameState.DRAW)
             return "DRAW";
         else if (state == GameState.O_WON)
-            return "O_WON";
+            return "O WON";
         else if (state == GameState.S_WON)
-            return "S_WON";
+            return "S WON";
         else
             return "Playing";
 
     }
-    public GameState updateState(){
+    public void updateState(){
         int maximumPossibleMoves = grid.length * grid.length;
-        if (sPlayerPoints >= pointsNeededToWin)
-            state = GameState.S_WON;
-        else if (oPlayerPoints >= pointsNeededToWin)
-            state = GameState.O_WON;
-        else if (totalMoves > maximumPossibleMoves)
+        if (movesThisGame > maximumPossibleMoves)
             state = GameState.DRAW;
         else state = GameState.PLAYING;
-        return state;
+
 
 
     }
@@ -62,19 +58,21 @@ public class SOSBoard{
 
         //char adjacentToken = (turn == 'S') ? 'O' : 'S';
         //int offset = (turn == 'O') ? '1' : '0';
-        //boolean sosFound = false;
+        //boolean sosFound =
+
+
+
         int offset = 0;
         int pointsThisTurn = 0;
         if (turn == 'O' && grid[row][col] != 'O' )
            pointsThisTurn += 0;
         if (turn == 'O' && grid[row][col] == 'O' && row >0) {
             pointsThisTurn += checkSOS(row-1, col);
-           // pointsThisTurn += checkSOS(row+1, col);
+
 
         }
         if (turn == 'O' && grid[row][col] == 'O' && col >0) {
             pointsThisTurn += checkSOS(row, col-1);
-           // pointsThisTurn += checkSOS(row, col+1);
 
         }
 
@@ -158,7 +156,11 @@ public class SOSBoard{
         if (getActivePlayer() == 'S')
             sPlayerPoints += pointsThisTurn;
         else if (getActivePlayer() == 'O')
+        {
+            if (pointsThisTurn >1)
+                pointsThisTurn = 1;
             oPlayerPoints += pointsThisTurn;
+        }
 
         return pointsThisTurn;
     }
@@ -173,6 +175,7 @@ public class SOSBoard{
             {
                 grid[row][column] = 'S';
                 sPlayerPoints+= checkSOS(row, column);
+                movesThisGame += 1;
                 //checkSOS(row, column, activePlayer);
                 //if (CheckWin(row, column) == GameState.S_WON)
 
@@ -183,13 +186,12 @@ public class SOSBoard{
             {
                 grid[row][column] = 'O' ;
                 oPlayerPoints+= checkSOS(row, column);
-                //checkSOS(row, column, activePlayer);
-             //   if (CheckWin(row, column) == GameState.O_WON)
+                movesThisGame += 1;
 
             }
 
 
-
+            updateState();
             switchActivePlayer();
         }
 
