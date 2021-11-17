@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SOSBoard{
     public enum Cell {EMPTY, S, O};
@@ -10,8 +11,12 @@ public class SOSBoard{
     protected char activePlayer;
     protected int sPlayerPoints;
     protected int oPlayerPoints;
+    private boolean sPlayerIsAI;
+    private boolean oPlayerIsAI;
+
     //protected int pointsNeededToWin = 1;
     protected int movesThisGame;
+    Random rng = new Random();
 
     public SOSBoard(int size)
     {
@@ -27,7 +32,18 @@ public class SOSBoard{
                 grid[i][j] = ' ';
 
     }
+    public void setAIplayer(char player){
+        
+    }
+    public void makeAImove(char AIplayer){
 
+        int row = rng.nextInt(grid.length);
+        int col = rng.nextInt(grid.length);
+        if (!makeMove(row,col))
+            makeAImove(AIplayer);
+
+
+    }
     public String getState()
     {
 
@@ -165,7 +181,7 @@ public class SOSBoard{
         return pointsThisTurn;
     }
 
-    public void makeMove(int row, int column)
+    public boolean makeMove(int row, int column)
     {
         if ((row >=0 && row < grid.length && column >= 0 && column < grid.length) && grid[row][column] == ' ')
         {
@@ -193,8 +209,9 @@ public class SOSBoard{
 
             updateState();
             switchActivePlayer();
+            return true;
         }
-
+        else return false;
 
 
     }
