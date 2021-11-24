@@ -54,9 +54,9 @@ public class SOSApplication extends Application {
 
                 boardSize= Integer.parseInt (valueOf(boardSizeSelect.getValue().charAt(0)));
                //boardSize =3;
-            gameOver();
-            initializeBoard(boardSize);
 
+            initializeBoard(boardSize);
+            clearBoard();
                // newGame.setDisable(true);
 
 
@@ -124,7 +124,7 @@ public class SOSApplication extends Application {
         bluePoints = new Text();
         redPoints = new Text();
 
-        gameStatusPane.getChildren().addAll(boardSizeSelect, new Text("Blue points: "), bluePoints,new Text("Red points: "),redPoints);
+        gameStatusPane.getChildren().addAll(boardSizeSelect);
 
         mainGUI = new BorderPane();
 
@@ -145,7 +145,9 @@ public class SOSApplication extends Application {
     }
     private void initializeBoard(int board_size)
     {
+
         boardGUI.getChildren().removeAll();
+
         //activePlayerColor = Color.BLUE;
         if (bluePlayerS.isSelected())
             sPlayerColor = Color.BLUE;
@@ -156,10 +158,6 @@ public class SOSApplication extends Application {
 
         else if (redPlayerO.isSelected() && sPlayerColor != Color.RED)
              oPlayerColor = Color.RED;
-
-
-
-       // activePlayerColor = sPlayerColor;
 
 
         if (simpleGameButton.isSelected())
@@ -231,14 +229,19 @@ public class SOSApplication extends Application {
 
         }
     }
-    public void gameOver()
-    {
-        tiles = new Tile[3][3];
+    public void clearBoard() {
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles.length; j++) {
+                tiles[i][j].setTile(" ");
+            }
+
+        }
     }
     public void handleClick(MouseEvent event) {
 
 
-        if (game.getState() != "O WON" && game.getState() != "S WON"&& game.getState() != "DRAW" )
+        //if (game.getState() != "O WON" && game.getState() != "S WON"&& game.getState() != "DRAW" )
         {
             Tile t = (Tile) event.getSource();
             int row = GridPane.getRowIndex(t);
