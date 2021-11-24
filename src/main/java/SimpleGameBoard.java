@@ -14,8 +14,10 @@ public class SimpleGameBoard extends SOSBoard{
             state = GameState.S_WON;
         else if (oPlayerPoints >= pointsNeededToWin)
             state = GameState.O_WON;
-        else if (movesThisGame > maximumPossibleMoves)
-            state = GameState.DRAW;
-        else state = GameState.PLAYING;
+        else if (movesThisGame <maximumPossibleMoves)
+            state = GameState.PLAYING;
+        else state = GameState.DRAW;
     }
+
+
 }
