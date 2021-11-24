@@ -70,12 +70,6 @@ public class SOSBoard{
     public int checkSOS(int row, int col)
     {
         char turn = getActivePlayer();
-        System.out.print(row);
-
-        //char adjacentToken = (turn == 'S') ? 'O' : 'S';
-        //int offset = (turn == 'O') ? '1' : '0';
-        //boolean sosFound =
-
 
 
         int offset = 0;
