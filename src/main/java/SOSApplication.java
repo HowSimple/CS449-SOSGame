@@ -28,9 +28,10 @@ public class SOSApplication extends Application {
     VBox blueControlsPane, redControlsPane;
     Button newGame;
     Color sPlayerColor, oPlayerColor;
-    ToggleGroup red, blue, mode;
+    ToggleGroup redLetter, blueLetter, bluePlayer, redPlayer, mode;
     RadioButton bluePlayerS, bluePlayerO;
     RadioButton redPlayerS, redPlayerO ;
+    RadioButton bluePlayerHuman, redPlayerHuman, bluePlayerComputer, redPlayerComputer;
     RadioButton simpleGameButton, generalGameButton;
     HBox gameStatusPane;
     Text gameStatus, bluePoints, redPoints;
@@ -46,8 +47,10 @@ public class SOSApplication extends Application {
 
         newGame = new Button("New Game");
         newGame.disableProperty().bind(boardSizeSelect.valueProperty().isNull()
-                .or(blue.selectedToggleProperty().isNull())
-                .or(red.selectedToggleProperty().isNull() )
+                .or(blueLetter.selectedToggleProperty().isNull())
+                .or(redLetter.selectedToggleProperty().isNull() )
+                .or(blueLetter.selectedToggleProperty().isNull())
+                .or(redLetter.selectedToggleProperty().isNull() )
 
         );
         newGame.setOnAction(e -> {
@@ -69,28 +72,38 @@ public class SOSApplication extends Application {
     }
     private void initializeControls()
     {
+        bluePlayerHuman = new RadioButton("Human");
+        redPlayerHuman = new RadioButton("Human");
 
+        bluePlayerComputer = new RadioButton("Computer");
+        redPlayerComputer = new RadioButton("Computer");
 
+        ToggleGroup bluePlayer = new ToggleGroup();
+        ToggleGroup redPlayer = new ToggleGroup();
+        bluePlayerHuman.setToggleGroup(bluePlayer);
+        bluePlayerComputer.setToggleGroup(bluePlayer);
+        redPlayerHuman.setToggleGroup(redPlayer);
+        redPlayerComputer.setToggleGroup(redPlayer);
 
         boardGUI = new GridPane();
         boardGUI.setPrefSize(755, 755);
         blueControlsPane = new VBox();
         bluePlayerS = new RadioButton("S");
         bluePlayerO = new RadioButton("O");
-        blue = new ToggleGroup();
-        bluePlayerS.setToggleGroup(blue);
-        bluePlayerO.setToggleGroup(blue);
+        blueLetter = new ToggleGroup();
+        bluePlayerS.setToggleGroup(blueLetter);
+        bluePlayerO.setToggleGroup(blueLetter);
         Text blueLabel = new Text("Blue player");
-        blueControlsPane.getChildren().addAll(blueLabel, bluePlayerS, bluePlayerO);
+        blueControlsPane.getChildren().addAll(blueLabel,bluePlayerHuman, bluePlayerS, bluePlayerO, bluePlayerComputer);
 
         redControlsPane = new VBox();
         redPlayerS = new RadioButton("S");
         redPlayerO = new RadioButton("O");
-        red = new ToggleGroup();
-        redPlayerS.setToggleGroup(red);
-        redPlayerO.setToggleGroup(red);
+        redLetter = new ToggleGroup();
+        redPlayerS.setToggleGroup(redLetter);
+        redPlayerO.setToggleGroup(redLetter);
         Text redLabel = new Text("Red player");
-        redControlsPane.getChildren().addAll(redLabel, redPlayerS, redPlayerO);
+        redControlsPane.getChildren().addAll(redLabel, redPlayerHuman,redPlayerS, redPlayerO,redPlayerComputer);
 
 
 
@@ -153,21 +166,43 @@ public class SOSApplication extends Application {
             sPlayerColor = Color.BLUE;
         else if( redPlayerS.isSelected())
             sPlayerColor = Color.RED;
+        boolean sPlayerIsHuman = false;
+        boolean oPlayerIsHuman = false;
         if (bluePlayerO.isSelected() && sPlayerColor != Color.BLUE)
+        {
             oPlayerColor = Color.BLUE;
 
+        }
+
         else if (redPlayerO.isSelected() && sPlayerColor != Color.RED)
-             oPlayerColor = Color.RED;
 
+        {
+            oPlayerColor = Color.RED;
+            if (redPlayerHuman.isSelected())
+                oPlayerIsHuman = true;
+            else oPlayerIsHuman = false;
+        }
+        if (redPlayerHuman.isSelected())
+            if (sPlayerColor == Color.RED)
+                sPlayerIsHuman = true;
+            else
+                oPlayerIsHuman = true;
 
+        if (bluePlayerHuman.isSelected())
+        {
+            if (sPlayerColor == Color.BLUE)
+                sPlayerIsHuman = true;
+            else oPlayerIsHuman = true;
+
+        }
         if (simpleGameButton.isSelected())
         {
-           game = new SimpleGameBoard(board_size);
+            game = new SimpleGameBoard(board_size, sPlayerIsHuman, oPlayerIsHuman);
 
         }
         else if (generalGameButton.isSelected())
         {
-           game = new GeneralGameBoard(board_size);
+           game = new GeneralGameBoard(board_size, sPlayerIsHuman, oPlayerIsHuman);
         }
 
 
@@ -274,7 +309,7 @@ public class SOSApplication extends Application {
     }
 
     public void startGame(Stage stage) throws IOException {
-        game = new SOSBoard(boardSize);
+        game = new SOSBoard(boardSize, bluePlayerComputer.isSelected(), redPlayerComputer.isSelected());
 
         stage.close();
         //start(new Stage());
