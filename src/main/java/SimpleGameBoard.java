@@ -3,13 +3,14 @@ import java.util.List;
 
 public class SimpleGameBoard extends SOSBoard{
 
-    SimpleGameBoard(int size)
+    SimpleGameBoard(int size, boolean playerS_isAI, boolean playerO_isAI)
     {
-        super(size);
+        super(size, playerS_isAI, playerO_isAI);
     }
     public void updateState(){
         int  pointsNeededToWin = 1;
         int maximumPossibleMoves = grid.length * grid.length;
+        makeAImove();
         if (sPlayerPoints >= pointsNeededToWin)
             state = GameState.S_WON;
         else if (oPlayerPoints >= pointsNeededToWin)
