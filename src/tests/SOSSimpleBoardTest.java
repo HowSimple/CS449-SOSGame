@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SOSSimpleBoardTest {
+public class SOSSimpleBoardTest {
     protected SOSBoard board;
     protected int testBoardSize;
 
@@ -16,7 +16,7 @@ class SOSSimpleBoardTest {
     @BeforeEach
     void setUp() throws Exception {
         testBoardSize = 8;
-        board = new SimpleGameBoard(testBoardSize);
+        board = new SimpleGameBoard(testBoardSize, false, false);
     }
 
     @AfterEach
