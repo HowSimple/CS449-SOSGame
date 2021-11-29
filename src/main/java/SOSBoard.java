@@ -11,39 +11,32 @@ public class SOSBoard{
     protected char activePlayer;
     protected int sPlayerPoints;
     protected int oPlayerPoints;
-    private boolean sPlayerIsAI;
-    private boolean oPlayerIsAI;
+    protected boolean sPlayerIsAI;
+    protected boolean oPlayerIsAI;
 
     //protected int pointsNeededToWin = 1;
     protected int movesThisGame;
     Random rng = new Random();
 
-    public SOSBoard(int size)
+    public SOSBoard(int size, boolean playerS_isAI, boolean playerO_isAI)
     {
+        sPlayerIsAI = playerS_isAI;
+        oPlayerIsAI = playerO_isAI;
         movesThisGame = 0;
         sPlayerPoints = 0;
         oPlayerPoints = 0;
         activePlayer = 'S';
         boardSize = size;
+
         state = GameState.PLAYING;
         grid = new char[size][size];
         for (int i = 0; i < size; i++)
             for (int j= 0; j < size; j++)
                 grid[i][j] = ' ';
 
+        //updateState();
     }
-    public void setAIplayer(char player){
-        
-    }
-    public void makeAImove(char AIplayer){
 
-        int row = rng.nextInt(grid.length);
-        int col = rng.nextInt(grid.length);
-        if (!makeMove(row,col))
-            makeAImove(AIplayer);
-
-
-    }
     public String getState()
     {
 
@@ -57,37 +50,42 @@ public class SOSBoard{
             return "Playing";
 
     }
-    public void updateState(){
+    public void checkForGameWin(){
         int maximumPossibleMoves = grid.length * grid.length;
         if (movesThisGame > maximumPossibleMoves)
             state = GameState.DRAW;
         else state = GameState.PLAYING;
+    }
+    public void updateState(){
 
+        checkForGameWin();
+        if (state == GameState.PLAYING) {
 
+            if ((activePlayer == 'S' && sPlayerIsAI) || (activePlayer == 'O' && oPlayerIsAI))
+                makeAImove();
+        }
 
     }
 
     public int checkSOS(int row, int col)
     {
-        char turn = getActivePlayer();
-
+        // adds points to score when player completes a S.O.S. sequence
 
         int offset = 0;
         int pointsThisTurn = 0;
-        if (turn == 'O' && grid[row][col] != 'O' )
-           pointsThisTurn += 0;
-        if (turn == 'O' && grid[row][col] == 'O' && row >0) {
+
+        if (getActivePlayer() == 'O' && grid[row][col] == 'O' && row >0) {
             pointsThisTurn += checkSOS(row-1, col);
 
 
         }
-        if (turn == 'O' && grid[row][col] == 'O' && col >0) {
+        if (getActivePlayer() == 'O' && grid[row][col] == 'O' && col >0) {
             pointsThisTurn += checkSOS(row, col-1);
 
         }
 
 
-        if (turn == 'O' && grid[row][col] == 'O'  && row > 0 && col > 0 )
+        if (getActivePlayer() == 'O' && grid[row][col] == 'O'  && row > 0 && col > 0 )
         {
             pointsThisTurn+= checkSOS(row-1, col-1);
         }
@@ -174,35 +172,51 @@ public class SOSBoard{
 
         return pointsThisTurn;
     }
+    public void makeAImove(){
 
+        if ( (activePlayer == 'S' && sPlayerIsAI) || (activePlayer== 'O' && oPlayerIsAI))
+        {
+
+            int row = rng.nextInt(grid.length);
+            int col = rng.nextInt(grid.length);
+            //row = 1;
+            //col = 1;
+            if (!makeMove(row,col))
+                makeAImove();
+        }
+
+
+
+
+
+    }
     public boolean makeMove(int row, int column)
     {
+
+
         if ((row >=0 && row < grid.length && column >= 0 && column < grid.length) && grid[row][column] == ' ')
         {
 
-
+            movesThisGame += 1;
             if (activePlayer == 'S')
             {
                 grid[row][column] = 'S';
                 sPlayerPoints+= checkSOS(row, column);
-                movesThisGame += 1;
+                //switchActivePlayer();
                 //checkSOS(row, column, activePlayer);
                 //if (CheckWin(row, column) == GameState.S_WON)
-
-
             }
 
             else if (activePlayer == 'O')
             {
                 grid[row][column] = 'O' ;
                 oPlayerPoints+= checkSOS(row, column);
-                movesThisGame += 1;
-
+                //switchActivePlayer();
             }
 
-
-            updateState();
             switchActivePlayer();
+            //updateState();
+
             return true;
         }
         else return false;
@@ -240,6 +254,8 @@ public class SOSBoard{
             activePlayer = 'O';
         else activePlayer = 'S';
 
+
     }
+
 
 }
