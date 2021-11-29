@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.String.valueOf;
 
@@ -34,16 +35,12 @@ public class SOSApplication extends Application {
     RadioButton bluePlayerHuman, redPlayerHuman, bluePlayerComputer, redPlayerComputer;
     RadioButton simpleGameButton, generalGameButton;
     HBox gameStatusPane;
-    Text gameStatus, bluePoints, redPoints;
+    Text gameStatus, bluePoints, redPoints, prompt;
     ComboBox<String> boardSizeSelect;
 
 
     private void newGameOptions(Stage stage)
     {
-        //initializeControls();
-
-
-
 
         newGame = new Button("New Game");
         newGame.disableProperty().bind(boardSizeSelect.valueProperty().isNull()
@@ -51,80 +48,61 @@ public class SOSApplication extends Application {
                 .or(redLetter.selectedToggleProperty().isNull() )
                 .or(blueLetter.selectedToggleProperty().isNull())
                 .or(redLetter.selectedToggleProperty().isNull() )
+                .or(redPlayer.selectedToggleProperty().isNull() )
+                .or(bluePlayer.selectedToggleProperty().isNull() )
 
         );
         newGame.setOnAction(e -> {
-
-                boardSize= Integer.parseInt (valueOf(boardSizeSelect.getValue().charAt(0)));
-               //boardSize =3;
-
+            // action starts a new game using board-size UI selection
+            boardSize= Integer.parseInt (valueOf(boardSizeSelect.getValue().charAt(0)));
             initializeBoard(boardSize);
-            clearBoard();
-               // newGame.setDisable(true);
-
-
-
-
-
-
     });
         gameStatusPane.getChildren().addAll(newGame, gameStatus);
     }
+
     private void initializeControls()
     {
-        bluePlayerHuman = new RadioButton("Human");
-        redPlayerHuman = new RadioButton("Human");
-
-        bluePlayerComputer = new RadioButton("Computer");
+        bluePlayer = new ToggleGroup();
+        redPlayer = new ToggleGroup();
         redPlayerComputer = new RadioButton("Computer");
-
-        ToggleGroup bluePlayer = new ToggleGroup();
-        ToggleGroup redPlayer = new ToggleGroup();
+        redPlayerHuman = new RadioButton("Human");
+        bluePlayerHuman = new RadioButton("Human");
         bluePlayerHuman.setToggleGroup(bluePlayer);
+        bluePlayerComputer = new RadioButton("Computer");
         bluePlayerComputer.setToggleGroup(bluePlayer);
-        redPlayerHuman.setToggleGroup(redPlayer);
         redPlayerComputer.setToggleGroup(redPlayer);
+        redPlayerHuman.setToggleGroup(redPlayer);
 
         boardGUI = new GridPane();
         boardGUI.setPrefSize(755, 755);
-        blueControlsPane = new VBox();
-        bluePlayerS = new RadioButton("S");
-        bluePlayerO = new RadioButton("O");
         blueLetter = new ToggleGroup();
+        bluePlayerS = new RadioButton("S");
         bluePlayerS.setToggleGroup(blueLetter);
+        bluePlayerO = new RadioButton("O");
         bluePlayerO.setToggleGroup(blueLetter);
-        Text blueLabel = new Text("Blue player");
-        blueControlsPane.getChildren().addAll(blueLabel,bluePlayerHuman, bluePlayerS, bluePlayerO, bluePlayerComputer);
+        blueControlsPane = new VBox();
+        blueControlsPane.getChildren().addAll( new Text("Blue player"),bluePlayerHuman, bluePlayerS, bluePlayerO, bluePlayerComputer);
 
-        redControlsPane = new VBox();
-        redPlayerS = new RadioButton("S");
-        redPlayerO = new RadioButton("O");
         redLetter = new ToggleGroup();
+
+        redPlayerS = new RadioButton("S");
         redPlayerS.setToggleGroup(redLetter);
+        redPlayerO = new RadioButton("O");
         redPlayerO.setToggleGroup(redLetter);
-        Text redLabel = new Text("Red player");
-        redControlsPane.getChildren().addAll(redLabel, redPlayerHuman,redPlayerS, redPlayerO,redPlayerComputer);
-
-
-
-
-        modeControlsPane = new HBox();
-        Text gameLabel = new Text("SOS");
+        redControlsPane = new VBox();
+        redControlsPane.getChildren().addAll( new Text("Red player"), redPlayerHuman,redPlayerS, redPlayerO,redPlayerComputer);
+        mode = new ToggleGroup();
         simpleGameButton = new RadioButton("Simple game");
-        simpleGameButton.setSelected(true);
-        generalGameButton = new RadioButton("General game");
-        ToggleGroup mode = new ToggleGroup();
         simpleGameButton.setToggleGroup(mode);
+        generalGameButton = new RadioButton("General game");
         generalGameButton.setToggleGroup(mode);
-        modeControlsPane.getChildren().addAll(gameLabel,simpleGameButton,generalGameButton);
+        generalGameButton.setSelected(true);
+        modeControlsPane = new HBox();
+        modeControlsPane.getChildren().addAll( new Text("SOS"),simpleGameButton,generalGameButton);
 
         gameStatusPane = new HBox();
-        gameStatus = new Text("Current Turn: ");
-
-        //newGame = new Button("New Game");
         gameStatusPane.setSpacing(30);
-
-
+        gameStatus = new Text("Current Turn: ");
         boardSizeSelect = new ComboBox<String>();
         int minimumBoardSize = 3;
         int maximumBoardSize = 20;
@@ -136,11 +114,12 @@ public class SOSApplication extends Application {
         }
         bluePoints = new Text();
         redPoints = new Text();
-
+        prompt = new Text();
+        gameStatusPane.getChildren().add(prompt);
+        gameStatusPane.getChildren().remove(gameStatusPane.lookup("Click") );
         gameStatusPane.getChildren().addAll(boardSizeSelect);
 
         mainGUI = new BorderPane();
-
         boardGUI.setAlignment(Pos.CENTER);
         mainGUI.setCenter(boardGUI);
         modeControlsPane.setAlignment(Pos.CENTER);
@@ -153,58 +132,34 @@ public class SOSApplication extends Application {
         mainGUI.setTop(modeControlsPane);
         mainGUI.setBottom(gameStatusPane);
 
-
-
     }
     private void initializeBoard(int board_size)
     {
-
         boardGUI.getChildren().removeAll();
-
-        //activePlayerColor = Color.BLUE;
         if (bluePlayerS.isSelected())
+        {
             sPlayerColor = Color.BLUE;
-        else if( redPlayerS.isSelected())
-            sPlayerColor = Color.RED;
-        boolean sPlayerIsHuman = false;
-        boolean oPlayerIsHuman = false;
-        if (bluePlayerO.isSelected() && sPlayerColor != Color.BLUE)
-        {
-            oPlayerColor = Color.BLUE;
-
-        }
-
-        else if (redPlayerO.isSelected() && sPlayerColor != Color.RED)
-
-        {
             oPlayerColor = Color.RED;
-            if (redPlayerHuman.isSelected())
-                oPlayerIsHuman = true;
-            else oPlayerIsHuman = false;
         }
-        if (redPlayerHuman.isSelected())
+        else {
+            sPlayerColor = Color.RED;
+            oPlayerColor = Color.BLUE;
+        }
+        boolean sPlayerIsComputer = false, oPlayerIsComputer = false;
+        if (redPlayerComputer.isSelected())
             if (sPlayerColor == Color.RED)
-                sPlayerIsHuman = true;
+                sPlayerIsComputer = true;
             else
-                oPlayerIsHuman = true;
-
-        if (bluePlayerHuman.isSelected())
-        {
+                oPlayerIsComputer = true;
+        if (bluePlayerComputer.isSelected())
             if (sPlayerColor == Color.BLUE)
-                sPlayerIsHuman = true;
-            else oPlayerIsHuman = true;
+                sPlayerIsComputer = true;
+            else oPlayerIsComputer = true;
 
-        }
         if (simpleGameButton.isSelected())
-        {
-            game = new SimpleGameBoard(board_size, sPlayerIsHuman, oPlayerIsHuman);
-
-        }
+            game = new SimpleGameBoard(board_size, sPlayerIsComputer, oPlayerIsComputer);
         else if (generalGameButton.isSelected())
-        {
-           game = new GeneralGameBoard(board_size, sPlayerIsHuman, oPlayerIsHuman);
-        }
-
+           game = new GeneralGameBoard(board_size, sPlayerIsComputer, oPlayerIsComputer);
 
         tiles = new Tile[board_size][board_size];
         for (int i = 0; i < board_size; i++) {
@@ -217,9 +172,14 @@ public class SOSApplication extends Application {
 
             }
         }
+        if (sPlayerIsComputer && oPlayerIsComputer)
+            prompt.setText("Click the board to get the next computer move!");
+        else
+            prompt.setText("");
+        game.updateState();
         updateBoard();
-    }
 
+    }
 
     public class Tile extends StackPane {
         Text label;
@@ -227,15 +187,13 @@ public class SOSApplication extends Application {
         public Tile()
         {
             super();
-
             setOnMouseClicked((event) -> handleClick(event));
-            border = new Rectangle(50, 50);
-            //border = new Rectangle(50, 50);
-            border.setFill(Color.WHITE);
-            border.setStroke(Color.BLACK);
-            label = new Text("X");
+            label = new Text( " ");
             label.setFont(Font.font(40));
             label.setFill(Color.BLACK);
+            border = new Rectangle(50, 50);
+            border.setFill(Color.WHITE);
+            border.setStroke(Color.BLACK);
             getChildren().addAll(border, label);
             addEventFilter(MouseEvent.MOUSE_CLICKED, event -> handleClick(event));
         }
@@ -251,8 +209,6 @@ public class SOSApplication extends Application {
         {
             border.setFill(color);
         }
-
-
     }
 
     public void updateBoard() {
@@ -260,10 +216,15 @@ public class SOSApplication extends Application {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
                 tiles[i][j].setTile(valueOf(game.getCell(i,j)));
+                if( game.getCell(i,j) == 'S')
+                    tiles[i][j].setColor(sPlayerColor);
+                else if (game.getCell(i,j) == 'O')
+                    tiles[i][j].setColor(oPlayerColor);
             }
 
         }
     }
+
     public void clearBoard() {
 
         for (int i = 0; i < tiles.length; i++) {
@@ -273,37 +234,37 @@ public class SOSApplication extends Application {
 
         }
     }
+
     public void handleClick(MouseEvent event) {
 
+            if (game.getState() == "Playing")
+            {
+                Tile t = (Tile) event.getSource();
+                int row = GridPane.getRowIndex(t);
+                int col = GridPane.getColumnIndex(t);
+                game.makeMove(row,col );
+                game.updateState();
 
-        //if (game.getState() != "O WON" && game.getState() != "S WON"&& game.getState() != "DRAW" )
-        {
-            Tile t = (Tile) event.getSource();
-            int row = GridPane.getRowIndex(t);
-            int col = GridPane.getColumnIndex(t);
-            game.makeMove(row,col );
+                t.setTile(valueOf(game.getCell(row, col)));
+                if (game.getCell(row,col) == 'S')
+                    t.setColor(sPlayerColor);
+                else if (game.getCell(row,col) == 'O')
+                    t.setColor(oPlayerColor);
+                updateBoard();
+                tiles[row][col].setTile(valueOf(game.getCell(row,col)));
+                if (oPlayerColor == Color.BLUE)
+                    bluePoints.setText(valueOf(game.getOplayerPoints()));
+                else if (sPlayerColor == Color.BLUE)
+                    bluePoints.setText(valueOf(game.getSplayerPoints()));
+                if (oPlayerColor == Color.RED)
+                    redPoints.setText(valueOf(game.getOplayerPoints()));
+                else if (sPlayerColor == Color.RED)
+                    redPoints.setText(valueOf(game.getSplayerPoints()));
 
-            // if(activePlayerColor == Color.BLUE)
-            //     activePlayerColor = Color.RED;
-            // else activePlayerColor = Color.BLUE;
-            t.setTile(valueOf(game.getCell(row, col)));
-            if (game.getCell(row,col) == 'S')
-                t.setColor(sPlayerColor);
-            else if (game.getCell(row,col) == 'O')
-                t.setColor(oPlayerColor);
-            //updateBoard();
-            tiles[row][col].setTile(valueOf(game.getCell(row,col)));
-            if (oPlayerColor == Color.BLUE)
-                bluePoints.setText(valueOf(game.getOplayerPoints()));
-            else if (sPlayerColor == Color.BLUE)
-                bluePoints.setText(valueOf(game.getSplayerPoints()));
-            if (oPlayerColor == Color.RED)
-                redPoints.setText(valueOf(game.getOplayerPoints()));
-            else if (sPlayerColor == Color.RED)
-                redPoints.setText(valueOf(game.getSplayerPoints()));
+                gameStatus.setText(game.getState());
 
-            gameStatus.setText(game.getState());
-        }
+            }
+
 
 
     }
