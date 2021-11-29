@@ -7,10 +7,11 @@ public class SimpleGameBoard extends SOSBoard{
     {
         super(size, playerS_isAI, playerO_isAI);
     }
-    public void updateState(){
+    public void checkForGameWin()
+    {
         int  pointsNeededToWin = 1;
         int maximumPossibleMoves = grid.length * grid.length;
-        makeAImove();
+
         if (sPlayerPoints >= pointsNeededToWin)
             state = GameState.S_WON;
         else if (oPlayerPoints >= pointsNeededToWin)
@@ -19,6 +20,7 @@ public class SimpleGameBoard extends SOSBoard{
             state = GameState.PLAYING;
         else state = GameState.DRAW;
     }
+
 
 
 }
