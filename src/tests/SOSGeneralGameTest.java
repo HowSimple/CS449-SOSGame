@@ -45,16 +45,25 @@ class SOSGeneralGameTest {
     void GeneralGameWinByS()
     {
         board.makeMove(0,0);
+        board.updateState();
         board.makeMove(0,1);
+        board.updateState();
         board.makeMove(0,2);
 
+        board.updateState();
         board.makeMove(1,0);
+        board.updateState();
         board.makeMove(1,1);
+        board.updateState();
         board.makeMove(1,2);
+        board.updateState();
 
         board.makeMove(2,0);
+        board.updateState();
         board.makeMove(2,1);
+        board.updateState();
         board.makeMove(2,2);
+        board.updateState();
         //board.updateState();
         assertEquals(4, board.getSplayerPoints());
         assertEquals("S WON", board.getState());
@@ -64,32 +73,48 @@ class SOSGeneralGameTest {
     {
         board = new GeneralGameBoard(4, false, false);
         board.makeMove(1,0);
+        board.updateState();
         board.makeMove(0,0);
 
+        board.updateState();
         board.makeMove(2,0);
+        board.updateState();
         board.makeMove(3,0);
+        board.updateState();
         assertEquals(0, board.getSplayerPoints());
         assertEquals(0, board.getOplayerPoints());
         board.makeMove(1,1);
+        board.updateState();
         board.makeMove(0,1);
+        board.updateState();
 
         board.makeMove(2,1);
+        board.updateState();
         board.makeMove(3,1);
+        board.updateState();
         assertEquals(0, board.getSplayerPoints());
         assertEquals(0, board.getOplayerPoints());
         board.makeMove(1,2);
+        board.updateState();
         board.makeMove(0,2);
+        board.updateState();
 
 
 
         board.makeMove(2,3);
+        board.updateState();
         board.makeMove(2,2);
+        board.updateState();
         assertEquals(0, board.getSplayerPoints());
         assertEquals(0, board.getOplayerPoints());
         board.makeMove(0,3);
+        board.updateState();
         board.makeMove(3,3);
+        board.updateState();
         board.makeMove(1,3);
+        board.updateState();
         board.makeMove(3,2);
+        board.updateState();
 
 
 
@@ -103,31 +128,47 @@ class SOSGeneralGameTest {
     {
         board = new GeneralGameBoard(4,false, false);
         board.makeMove(1,0);
+        board.updateState();
         board.makeMove(0,0);
 
+        board.updateState();
         board.makeMove(2,0);
+        board.updateState();
         board.makeMove(3,0);
+        board.updateState();
         assertEquals(0, board.getSplayerPoints());
         assertEquals(0, board.getOplayerPoints());
         board.makeMove(1,1);
+        board.updateState();
         board.makeMove(0,1);
 
+        board.updateState();
         board.makeMove(2,1);
+        board.updateState();
         board.makeMove(3,1);
+        board.updateState();
         assertEquals(0, board.getSplayerPoints());
         assertEquals(0, board.getOplayerPoints());
         board.makeMove(1,2);
+        board.updateState();
         board.makeMove(0,2);
+        board.updateState();
 
         board.makeMove(2,2);
+        board.updateState();
         board.makeMove(3,2);
+        board.updateState();
         assertEquals(0, board.getSplayerPoints());
         assertEquals(0, board.getOplayerPoints());
         board.makeMove(1,3);
+        board.updateState();
         board.makeMove(0,3);
+        board.updateState();
 
         board.makeMove(2,3);
+        board.updateState();
         board.makeMove(3,3);
+        board.updateState();
         assertEquals("DRAW", board.getState());
     }
 
