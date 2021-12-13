@@ -16,7 +16,7 @@ public class SOSSimpleBoardTest {
     @BeforeEach
     void setUp() throws Exception {
         testBoardSize = 8;
-        board = new SimpleGameBoard(testBoardSize, false, false);
+        board = new SimpleGameBoard(testBoardSize, false, false, false);
     }
 
     @AfterEach

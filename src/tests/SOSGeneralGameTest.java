@@ -18,7 +18,7 @@ class SOSGeneralGameTest {
     @BeforeEach
     void setUp() throws Exception {
         testBoardSize = 3;
-        board = new GeneralGameBoard(testBoardSize, false, false);
+        board = new GeneralGameBoard(testBoardSize, false, false, false);
     }
 
     @AfterEach
@@ -71,7 +71,7 @@ class SOSGeneralGameTest {
     @Test
     void GeneralGameWinBy0()
     {
-        board = new GeneralGameBoard(4, false, false);
+        board = new GeneralGameBoard(4, false, false,false);
         board.makeMove(1,0);
         board.updateState();
         board.makeMove(0,0);
@@ -126,7 +126,7 @@ class SOSGeneralGameTest {
     @Test
     void GeneralGameDraw()
     {
-        board = new GeneralGameBoard(4,false, false);
+        board = new GeneralGameBoard(4,false, false,false);
         board.makeMove(1,0);
         board.updateState();
         board.makeMove(0,0);
