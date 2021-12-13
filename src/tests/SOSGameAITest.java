@@ -8,12 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-        import org.junit.jupiter.api.AfterEach;
-        import org.junit.jupiter.api.BeforeAll;
-        import org.junit.jupiter.api.BeforeEach;
-        import org.junit.jupiter.api.Test;
-
-public class SOSGameAITest {
+class SOSGameAITest {
     protected SOSBoard board;
     protected int testBoardSize;
 
@@ -24,7 +19,7 @@ public class SOSGameAITest {
     @BeforeEach
     void setUp() throws Exception {
         testBoardSize = 8;
-        board = new SimpleGameBoard(testBoardSize, false, true);
+        board = new SimpleGameBoard(testBoardSize, false, true,false);
     }
 
     @AfterEach
@@ -61,7 +56,7 @@ public class SOSGameAITest {
     @Test
     void makeAImove_02()
     {
-        board = new SimpleGameBoard(testBoardSize, false, true);
+        board = new SimpleGameBoard(testBoardSize, false, true, false);
         board.updateState();
         assertEquals('S', board.getActivePlayer());
         //board.makeAImove();
