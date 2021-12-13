@@ -1,27 +1,75 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Integer.parseInt;
+
 public class SOSBoard{
-    public enum Cell {EMPTY, S, O};
     protected char[][] grid;
-    public enum GameState {PLAYING, DRAW, S_WON, O_WON};
-    public GameState state;
+    protected enum GameState {PLAYING, DRAW, S_WON, O_WON};
+    protected GameState state;
     private int boardSize;
     protected char activePlayer;
-    protected int sPlayerPoints;
-    protected int oPlayerPoints;
-    protected boolean sPlayerIsAI;
-    protected boolean oPlayerIsAI;
-
-    //protected int pointsNeededToWin = 1;
+    protected int sPlayerPoints, oPlayerPoints;
+    protected boolean sPlayerIsAI, oPlayerIsAI;
+    protected boolean gameRecordingEnabled;
+    public String gameLogPath = "Recorded game.txt";
     protected int movesThisGame;
     Random rng = new Random();
+    protected String gameModeName;
+    public void recordGameOptions() {
+            try {
+                FileWriter fw = null;
+                fw = new FileWriter("Recorded game.txt", false);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("size " +grid.length+ " mode "+ gameModeName);
+                bw.newLine();
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int i = 0;
+    }
 
-    public SOSBoard(int size, boolean playerS_isAI, boolean playerO_isAI)
+        public void recordMove(int row, int column)
+    {
+
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(gameLogPath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(activePlayer + " "+row + " " +column);
+            bw.newLine();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public String readFromFile()
+    {
+        String line = "";
+        try (BufferedReader br = new BufferedReader(new FileReader(gameLogPath))) {
+            line = br.readLine();
+            //String[] split = line.split(" ");
+            //int boardSize = parseInt(split[1]);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return line;
+
+    }
+    public SOSBoard(int size, boolean playerS_isAI, boolean playerO_isAI, boolean gameRecording_Enabled)
     {
         sPlayerIsAI = playerS_isAI;
         oPlayerIsAI = playerO_isAI;
+        gameRecordingEnabled = gameRecording_Enabled;
+
         movesThisGame = 0;
         sPlayerPoints = 0;
         oPlayerPoints = 0;
@@ -33,7 +81,8 @@ public class SOSBoard{
         for (int i = 0; i < size; i++)
             for (int j= 0; j < size; j++)
                 grid[i][j] = ' ';
-
+        if (gameRecordingEnabled)
+            recordGameOptions();
         //updateState();
     }
 
@@ -71,95 +120,51 @@ public class SOSBoard{
     {
         // adds points to score when player completes a S.O.S. sequence
 
-        int offset = 0;
+
         int pointsThisTurn = 0;
 
-        if (getActivePlayer() == 'O' && grid[row][col] == 'O' && row >0) {
+        if (getActivePlayer() == 'O' && grid[row][col] == 'O' && row >0)
             pointsThisTurn += checkSOS(row-1, col);
 
-
-        }
-        if (getActivePlayer() == 'O' && grid[row][col] == 'O' && col >0) {
+        if (getActivePlayer() == 'O' && grid[row][col] == 'O' && col >0)
             pointsThisTurn += checkSOS(row, col-1);
-
-        }
 
 
         if (getActivePlayer() == 'O' && grid[row][col] == 'O'  && row > 0 && col > 0 )
-        {
             pointsThisTurn+= checkSOS(row-1, col-1);
-        }
-
-
-
-        //  bound check
 
         if (row +2 < grid.length-1  )
         {
-
-            if (grid[row-offset][col] == 'S'
-                    && grid[row-offset+1][col] == 'O'
-                    && grid[row-offset+2][col] == 'S')
-            {
-                //sosFound = true;
+            if (grid[row][col] == 'S' && grid[row+1][col] == 'O' && grid[row+2][col] == 'S')
                 pointsThisTurn += 1;
-            }
             if (col +2 < grid.length-1)
-                if (grid[row-offset][col] == 'S'
-                        && grid[row-offset+1][col+1] == 'O'
-                        && grid[row-offset+2][col+2] == 'S')
-                {
-                    //sosFound = true;
+                if (grid[row][col] == 'S' && grid[row+1][col+1] == 'O' && grid[row+2][col+2] == 'S')
                     pointsThisTurn += 1;
-                }
 
         }
-             //  bound check
+        //  bound check
         if (row -2 >= 0 )
         {
-            if (grid[row-offset][col] == 'S'
-                    && grid[row-offset-1][col] == 'O'
-                    && grid[row-offset-2][col] == 'S')
-            {
-                //sosFound = true;
+            if (grid[row][col] == 'S' && grid[row-1][col] == 'O' && grid[row-2][col] == 'S')
                 pointsThisTurn += 1;
-            }
             if (col -2 >= 0)
-                if (grid[row-offset][col] == 'S'
-                        && grid[row-offset-1][col-1] == 'O'
-                        && grid[row-offset-2][col-2] == 'S')
-                {
-                    //sosFound = true;
+                if (grid[row][col] == 'S' && grid[row-1][col-1] == 'O' && grid[row-2][col-2] == 'S')
                     pointsThisTurn += 1;
-                }
+
 
 
         }
 
 
         //  bound check
-         if (col + 2 < grid.length-1) {
-            if (grid[row][col-offset] == 'S'
-                    && grid[row][col-offset +1] == 'O'
-                    && grid[row][col-offset +2] == 'S')
-            {
-                //sosFound = true;
+         if (col + 2 < grid.length-1)
+            if (grid[row][col] == 'S' && grid[row][col +1] == 'O' && grid[row][col +2] == 'S')
                 pointsThisTurn += 1;
-            }
-        }
+
         //  bound check
          if (col - 2 >= 0)
-        {
-            if (grid[row][col-offset] == 'S'
-                    && grid[row][col-offset -1] == 'O'
-                    && grid[row][col-offset -2] == 'S')
-            {
-                //sosFound = true;
+            if (grid[row][col] == 'S' && grid[row][col -1] == 'O' && grid[row][col -2] == 'S')
                 pointsThisTurn += 1;
-            }
-
-
-        }
 
         if (getActivePlayer() == 'S')
             sPlayerPoints += pointsThisTurn;
@@ -172,7 +177,7 @@ public class SOSBoard{
 
         return pointsThisTurn;
     }
-    public void makeAImove(){
+    private void makeAImove(){
 
         if ( (activePlayer == 'S' && sPlayerIsAI) || (activePlayer== 'O' && oPlayerIsAI))
         {
@@ -214,6 +219,8 @@ public class SOSBoard{
                 //switchActivePlayer();
             }
 
+            if (gameRecordingEnabled)
+                recordMove(row, column);
             switchActivePlayer();
             //updateState();
 
