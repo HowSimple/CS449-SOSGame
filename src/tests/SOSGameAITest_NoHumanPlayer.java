@@ -21,7 +21,7 @@ import org.junit.jupiter.api.AfterEach;
         import org.junit.jupiter.api.BeforeEach;
         import org.junit.jupiter.api.Test;
 
-public class SOSGameAITest_NoHumanPlayer {
+ class SOSGameAITest_NoHumanPlayer {
     protected SOSBoard board;
     protected int testBoardSize;
 
@@ -32,7 +32,7 @@ public class SOSGameAITest_NoHumanPlayer {
     @BeforeEach
     void setUp() throws Exception {
         testBoardSize = 8;
-        board = new SimpleGameBoard(testBoardSize, true, true);
+        board = new SimpleGameBoard(testBoardSize, true, true,false);
     }
 
     @AfterEach
