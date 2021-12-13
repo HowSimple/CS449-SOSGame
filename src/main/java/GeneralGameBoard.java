@@ -1,7 +1,10 @@
 public class GeneralGameBoard extends SOSBoard {
 
-    public GeneralGameBoard(int size, boolean playerS_isAI, boolean playerO_isAI) {
-        super(size, playerS_isAI, playerO_isAI);
+    public GeneralGameBoard(int size, boolean playerS_isAI, boolean playerO_isAI, boolean enableRecording) {
+        super(size, playerS_isAI, playerO_isAI, enableRecording);
+        gameModeName = "general";
+        recordGameOptions();
+
     }
 
     public void checkForGameWin()

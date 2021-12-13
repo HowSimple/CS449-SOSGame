@@ -3,9 +3,15 @@ import java.util.List;
 
 public class SimpleGameBoard extends SOSBoard{
 
-    SimpleGameBoard(int size, boolean playerS_isAI, boolean playerO_isAI)
+    SimpleGameBoard(int size, boolean playerS_isAI, boolean playerO_isAI, boolean enableRecording)
     {
-        super(size, playerS_isAI, playerO_isAI);
+
+        super(size, playerS_isAI, playerO_isAI, enableRecording);
+        gameModeName = "simple";
+        recordGameOptions();
+
+
+
     }
     public void checkForGameWin()
     {
