@@ -10,101 +10,149 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.Integer.parseInt;
+import static java.lang.String.valueOf;
 
 public class SOSGameGUI extends Application {
-    SOSBoard gameboard;
+
+    int boardSize;
+    String gameLogPath = "Recorded game.txt";
+    SOSBoard game;
     Tile[][] tiles;
     GridPane boardGUI;
     BorderPane mainGUI;
     HBox modeControlsPane;
     VBox blueControlsPane, redControlsPane;
-    Button newGame;
+    Button newGame, replayGame;
+    Color sPlayerColor, oPlayerColor;
+    ToggleGroup redLetter, blueLetter, bluePlayer, redPlayer, mode;
     RadioButton bluePlayerS, bluePlayerO;
     RadioButton redPlayerS, redPlayerO ;
+    RadioButton bluePlayerHuman, redPlayerHuman, bluePlayerComputer, redPlayerComputer;
     RadioButton simpleGameButton, generalGameButton;
+    CheckBox recordGame;
     HBox gameStatusPane;
-    Text gameStatus;
+    Text gameStatus, bluePoints, redPoints, prompt;
     ComboBox<String> boardSizeSelect;
 
-    private void newGameOptions()
+
+    private void newGameOptions(Stage stage)
     {
 
-         boardSizeSelect = new ComboBox<String>();
-        int minimumBoardSize = 3;
-        int maximumBoardSize = 20;
+        newGame = new Button("New Game");
+        newGame.disableProperty().bind(boardSizeSelect.valueProperty().isNull()
+                .or(blueLetter.selectedToggleProperty().isNull())
+                .or(redLetter.selectedToggleProperty().isNull() )
+                .or(blueLetter.selectedToggleProperty().isNull())
+                .or(redLetter.selectedToggleProperty().isNull() )
+                .or(redPlayer.selectedToggleProperty().isNull() )
+                .or(bluePlayer.selectedToggleProperty().isNull() )
 
-      /*
-        EventHandler<ActionEvent> startButtonEvent = new EventHandler<ActionEvent>() {
-          @Override
-            public void handle(ActionEvent actionEvent) {
-                //selected.setText(boardSizeSelect.getValue() + " selected");
-                int boardSize;
-                try {
-                    boardSize = Integer.parseInt((String) boardSizeSelect.getValue());
-                } catch (NumberFormatException e)
-                {
-                    boardSize = 0;
-                }
+        );
+        replayGame = new Button("Replay");
+        replayGame.setOnAction(e-> {
+            replayGame();
+        });
+        newGame.setOnAction(e -> {
+            // action starts a new game using board-size UI selection
+            boardSize= Integer.parseInt (valueOf(boardSizeSelect.getValue().charAt(0)));
+            initializeBoard(boardSize);
+    });
 
-                System.out.print(boardSize);
+        gameStatusPane.getChildren().addAll(newGame, replayGame,gameStatus);
+    }
+    public void replayGame()
+    {
+        try (BufferedReader br = new BufferedReader(new FileReader(gameLogPath))) {
+            String line = br.readLine();
+            String[] split = line.split(" ");
+            int boardSize = parseInt(split[1]);
+            String mode = split[3];
 
+            if (mode == "simple")
+                game = new SimpleGameBoard(boardSize, false, false,false);
+            else
+                game = new GeneralGameBoard(boardSize, false, false, false);
+
+
+
+            while ((line = br.readLine()) != null) {
+                split = line.split(" ");
+                int row = parseInt(split[1]);
+                int col = parseInt(split[2]);
+
+                game.makeMove(row,col);
             }
-        };
-        newGame.setOnAction(startButtonEvent);
-
-        //newGame.setOnAction(startButtonEvent);
-        */
-        for (int i = 3; i < 20; i++)
-        {
-            String label = i +"x" + i;
-            boardSizeSelect.getItems().add(label);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        boardSizeSelect.getSelectionModel().select("9x9");
 
 
     }
     private void initializeControls()
     {
-        blueControlsPane = new VBox();
-        bluePlayerS = new RadioButton("S");
-        bluePlayerO = new RadioButton("O");
-        ToggleGroup blue = new ToggleGroup();
-        bluePlayerS.setToggleGroup(blue);
-        bluePlayerO.setToggleGroup(blue);
-        Text blueLabel = new Text("Blue player");
-        blueControlsPane.getChildren().addAll(blueLabel, bluePlayerS, bluePlayerO);
+        bluePlayer = new ToggleGroup();
+        redPlayer = new ToggleGroup();
+        redPlayerComputer = new RadioButton("Computer");
+        redPlayerHuman = new RadioButton("Human");
+        bluePlayerHuman = new RadioButton("Human");
+        bluePlayerHuman.setToggleGroup(bluePlayer);
+        bluePlayerComputer = new RadioButton("Computer");
+        bluePlayerComputer.setToggleGroup(bluePlayer);
+        redPlayerComputer.setToggleGroup(redPlayer);
+        redPlayerHuman.setToggleGroup(redPlayer);
 
-        redControlsPane = new VBox();
-        redPlayerS = new RadioButton("S");
-        redPlayerO = new RadioButton("O");
-        ToggleGroup red = new ToggleGroup();
-        redPlayerS.setToggleGroup(red);
-        redPlayerO.setToggleGroup(red);
-        Text redLabel = new Text("Red player");
-        redControlsPane.getChildren().addAll(redLabel, redPlayerS, redPlayerO);
-
-        modeControlsPane = new HBox();
-        Text gameLabel = new Text("SOS");
-        simpleGameButton = new RadioButton("Simple game");
-        generalGameButton = new RadioButton("General game");
-        ToggleGroup mode = new ToggleGroup();
-        simpleGameButton.setToggleGroup(mode);
-        generalGameButton.setToggleGroup(mode);
-        modeControlsPane.getChildren().addAll(gameLabel,simpleGameButton,generalGameButton);
-
-        gameStatusPane = new HBox();
-        gameStatus = new Text("Current Turn: ");
-
-
-        gameStatusPane.setSpacing(30);
-        gameStatusPane.getChildren().addAll(newGame, gameStatus);
-        gameStatusPane.getChildren().add(boardSizeSelect);
         boardGUI = new GridPane();
         boardGUI.setPrefSize(755, 755);
-        mainGUI = new BorderPane();
+        blueLetter = new ToggleGroup();
+        bluePlayerS = new RadioButton("S");
+        bluePlayerS.setToggleGroup(blueLetter);
+        bluePlayerO = new RadioButton("O");
+        bluePlayerO.setToggleGroup(blueLetter);
+        blueControlsPane = new VBox();
+        blueControlsPane.getChildren().addAll( new Text("Blue player"),bluePlayerHuman, bluePlayerS, bluePlayerO, bluePlayerComputer);
 
+        redLetter = new ToggleGroup();
+
+        redPlayerS = new RadioButton("S");
+        redPlayerS.setToggleGroup(redLetter);
+        redPlayerO = new RadioButton("O");
+        redPlayerO.setToggleGroup(redLetter);
+        redControlsPane = new VBox();
+        redControlsPane.getChildren().addAll( new Text("Red player"), redPlayerHuman,redPlayerS, redPlayerO,redPlayerComputer);
+        mode = new ToggleGroup();
+        simpleGameButton = new RadioButton("Simple game");
+        simpleGameButton.setToggleGroup(mode);
+        generalGameButton = new RadioButton("General game");
+        generalGameButton.setToggleGroup(mode);
+        generalGameButton.setSelected(true);
+        modeControlsPane = new HBox();
+        modeControlsPane.getChildren().addAll( new Text("SOS"),simpleGameButton,generalGameButton);
+
+        gameStatusPane = new HBox();
+        gameStatusPane.setSpacing(30);
+        gameStatus = new Text("Current Turn: ");
+        boardSizeSelect = new ComboBox<String>();
+        recordGame = new CheckBox("Record game");
+
+        int minimumBoardSize = 3;
+        int maximumBoardSize = 20;
+        for (int i = minimumBoardSize; i < maximumBoardSize; i++)
+        {
+            String label = i +"x" + i;
+            boardSizeSelect.getItems().add(label);
+        }
+        bluePoints = new Text();
+        redPoints = new Text();
+        prompt = new Text();
+        gameStatusPane.getChildren().add(prompt);
+        gameStatusPane.getChildren().remove(gameStatusPane.lookup("Click") );
+        gameStatusPane.getChildren().addAll(recordGame, boardSizeSelect);
+
+        mainGUI = new BorderPane();
         boardGUI.setAlignment(Pos.CENTER);
         mainGUI.setCenter(boardGUI);
         modeControlsPane.setAlignment(Pos.CENTER);
@@ -117,23 +165,56 @@ public class SOSGameGUI extends Application {
         mainGUI.setTop(modeControlsPane);
         mainGUI.setBottom(gameStatusPane);
 
-
-
     }
     private void initializeBoard(int board_size)
     {
-        gameboard = new SOSBoard(board_size);
-        boardGUI = new GridPane();
-       // if (boardGUI != null)
-        //    boardGUI.getChildren().clear();
+        boardGUI.getChildren().removeAll();
+        if (bluePlayerS.isSelected())
+        {
+            sPlayerColor = Color.BLUE;
+            oPlayerColor = Color.RED;
+        }
+        else {
+            sPlayerColor = Color.RED;
+            oPlayerColor = Color.BLUE;
+        }
+        boolean sPlayerIsComputer = false, oPlayerIsComputer = false;
+        if (redPlayerComputer.isSelected())
+            if (sPlayerColor == Color.RED)
+                sPlayerIsComputer = true;
+            else
+                oPlayerIsComputer = true;
+        if (bluePlayerComputer.isSelected())
+            if (sPlayerColor == Color.BLUE)
+                sPlayerIsComputer = true;
+            else oPlayerIsComputer = true;
+        String mode;
 
-        //SOSGame(board_size);
 
+                if (simpleGameButton.isSelected()){
+                    game = new SimpleGameBoard(board_size, sPlayerIsComputer, oPlayerIsComputer, recordGame.isSelected() );
+                    mode = "simple";
+                }
+
+
+        else
+                {
+                    game = new GeneralGameBoard(board_size, sPlayerIsComputer, oPlayerIsComputer, recordGame.isSelected() );
+                    mode = "general";
+                }
+        if (recordGame.isSelected())
+            try {
+                FileWriter fw = null;
+                fw = new FileWriter("Recorded game.txt", false);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("size " +board_size+ " mode "+ mode);
+                bw.newLine();
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         tiles = new Tile[board_size][board_size];
-
-        boardGUI.setPrefSize(755, 755);
-
         for (int i = 0; i < board_size; i++) {
             for (int j = 0; j < board_size; j++) {
                 //Tile t = new Tile()
@@ -144,34 +225,12 @@ public class SOSGameGUI extends Application {
 
             }
         }
+        if (sPlayerIsComputer && oPlayerIsComputer)
+            prompt.setText("Click the board to get the next computer move!");
+        else
+            prompt.setText("");
+        game.updateState();
         updateBoard();
-    }
-    private void initializeGame()
-    {
-
-
-
-       //initializeBoard(board_size);
-        newGameOptions();
-        initializeControls();
-
-
-
-        mainGUI = new BorderPane();
-
-        boardGUI.setAlignment(Pos.CENTER);
-        mainGUI.setCenter(boardGUI);
-        modeControlsPane.setAlignment(Pos.CENTER);
-        blueControlsPane.setAlignment(Pos.CENTER);
-        redControlsPane.setAlignment(Pos.CENTER);
-        gameStatusPane.setAlignment(Pos.CENTER);
-
-        mainGUI.setLeft(blueControlsPane);
-        mainGUI.setRight(redControlsPane);
-        mainGUI.setTop(modeControlsPane);
-        mainGUI.setBottom(gameStatusPane);
-
-
 
     }
 
@@ -181,21 +240,19 @@ public class SOSGameGUI extends Application {
         public Tile()
         {
             super();
-
             setOnMouseClicked((event) -> handleClick(event));
+            label = new Text( " ");
+            label.setFont(Font.font(40));
+            label.setFill(Color.BLACK);
             border = new Rectangle(50, 50);
-            //border = new Rectangle(50, 50);
             border.setFill(Color.WHITE);
             border.setStroke(Color.BLACK);
-            label = new Text("X");
-            label.setFont(Font.font(40));
-            label.setFill(Color.BLUE);
             getChildren().addAll(border, label);
             addEventFilter(MouseEvent.MOUSE_CLICKED, event -> handleClick(event));
         }
         public void setTile(String text)
         {
-            label.setText(String.valueOf(text));
+            label.setText(valueOf(text));
         }
         public String getTile()
         {
@@ -205,91 +262,83 @@ public class SOSGameGUI extends Application {
         {
             border.setFill(color);
         }
-
-
     }
 
     public void updateBoard() {
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
-                tiles[i][j].setTile(String.valueOf(gameboard.getCell(i,j)));
+                tiles[i][j].setTile(valueOf(game.getCell(i,j)));
+                if( game.getCell(i,j) == 'S')
+                    tiles[i][j].setColor(sPlayerColor);
+                else if (game.getCell(i,j) == 'O')
+                    tiles[i][j].setColor(oPlayerColor);
             }
 
         }
     }
+
+    public void clearBoard() {
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles.length; j++) {
+                tiles[i][j].setTile(" ");
+            }
+
+        }
+    }
+
     public void handleClick(MouseEvent event) {
 
+            if (game.getState() == "Playing")
+            {
+                Tile t = (Tile) event.getSource();
+                int row = GridPane.getRowIndex(t);
+                int col = GridPane.getColumnIndex(t);
+                game.makeMove(row,col );
+                game.updateState();
 
-        Tile t = (Tile) event.getSource();
+                t.setTile(valueOf(game.getCell(row, col)));
+                if (game.getCell(row,col) == 'S')
+                    t.setColor(sPlayerColor);
+                else if (game.getCell(row,col) == 'O')
+                    t.setColor(oPlayerColor);
+                updateBoard();
+                tiles[row][col].setTile(valueOf(game.getCell(row,col)));
+                if (oPlayerColor == Color.BLUE)
+                    bluePoints.setText(valueOf(game.getOplayerPoints()));
+                else if (sPlayerColor == Color.BLUE)
+                    bluePoints.setText(valueOf(game.getSplayerPoints()));
+                if (oPlayerColor == Color.RED)
+                    redPoints.setText(valueOf(game.getOplayerPoints()));
+                else if (sPlayerColor == Color.RED)
+                    redPoints.setText(valueOf(game.getSplayerPoints()));
 
-        int row = GridPane.getRowIndex(t);
-        int col = GridPane.getColumnIndex(t);
-        gameboard.makeMove(row,col );
-        t.setColor(Color.GREY);
-        t.setTile(String.valueOf(gameboard.getCell(row, col)));
-        updateBoard();
+                gameStatus.setText(game.getState());
+
+            }
+
+
 
     }
 
-    public void prompt()
-    {
+    public void startGame(Stage stage) throws IOException {
+        game = new SOSBoard(boardSize, bluePlayerComputer.isSelected(), redPlayerComputer.isSelected(), recordGame.isSelected());
 
-        newGameOptions();
-        initializeControls();
+        stage.close();
+        //start(new Stage());
     }
-    public void startGame()
-    {
 
 
-    }
     @Override
     public void start(Stage stage ) throws IOException {
         //need to add separate screen for player to choose board size
-        newGame = new Button("New Game");
-        newGame.setOnAction(e -> {
-            //String label = boardSizeSelect.getSelectionModel().getSelectedItem();
-            String sizeSelection = boardSizeSelect.getValue();
-            int boardSize= Integer.parseInt (String.valueOf(boardSizeSelect.getValue().charAt(0)));
-            //start(stage);
-
-
-            try {
-                restart(stage, boardSize);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            //newGame.setDisable(true);
-
-        });
-        prompt();
         int boardSize = 9;
-
         //initializeGame(boardSize);
-
-        Scene scene = new Scene(mainGUI , 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.setWidth(700);
-        stage.setHeight(700);
-
-
-
-
-        stage.show();
-    }
-    public void resetGame()
-    {
-
-
-    }
-    public void restart(Stage stage, int boardSize) throws IOException {
-       //stage.close();
-        //initializeGame(boardSize);
-        newGameOptions();
-        initializeBoard(boardSize);
         initializeControls();
+        newGameOptions(stage);
+
+
         Scene scene = new Scene(mainGUI , 320, 240);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -305,4 +354,5 @@ public class SOSGameGUI extends Application {
         launch();
     }
 }
+
 

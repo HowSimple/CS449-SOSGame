@@ -1,11 +1,14 @@
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SOSBoardTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class SOSGameAITest {
     protected SOSBoard board;
     protected int testBoardSize;
 
@@ -15,7 +18,8 @@ class SOSBoardTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        board = new SOSBoard(testBoardSize);
+        testBoardSize = 8;
+        board = new SimpleGameBoard(testBoardSize, false, true,false);
     }
 
     @AfterEach
@@ -37,23 +41,34 @@ class SOSBoardTest {
         assertEquals('S' ,board.getCell(3,1));
     }
     @Test
-    void makeMove()
+    void makeAImove_01()
     {
 
         board.makeMove(3, 1);
+
+        board.updateState();
         assertEquals('S' ,board.getCell(3,1));
+        //assertEquals('O',board.getActivePlayer());
+
+        assertEquals(2,board.movesThisGame);
+
     }
     @Test
-    void switchActivePlayer() {
+    void makeAImove_02()
+    {
+        board = new SimpleGameBoard(testBoardSize, false, true, false);
+        board.updateState();
         assertEquals('S', board.getActivePlayer());
-        board.switchActivePlayer();
-        assertEquals('O', board.getActivePlayer());
+        //board.makeAImove();
+        board.makeMove(3, 1);
+
+        board.updateState();
+        assertEquals('O' ,board.getCell(3,1));
+        //assertEquals('O',board.getActivePlayer());
+
+        assertEquals(3,board.movesThisGame);
+
     }
-    @Test
-    void getActivePlayer() {
-        assertEquals('S', board.getActivePlayer());
-        board.switchActivePlayer();
-        assertEquals('O', board.getActivePlayer());
-    }
+
 
 }
